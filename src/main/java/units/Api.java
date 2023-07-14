@@ -6,19 +6,22 @@ import lombok.Data;
 public class Api {
 
     private double api;
-    private double dens;
+    private double densVac;
+    private double densAir;
 
     public static Api fromApi(double api) {
         Api a = new Api();
         a.setApi(api);
-        a.setDens(a.toDens(api));
+        a.setDensVac(a.toDens(api));
+        a.setDensAir(a.getDensVac() - 0.0011);
         return a;
     }
 
-    public static Api formDens(double dens) {
+    public static Api formDens(double densVac) {
         Api a = new Api();
-        a.setDens(dens);
-        a.setApi(a.toApi(dens));
+        a.setDensVac(densVac);
+        a.setApi(a.toApi(densVac));
+        a.setDensAir(a.getDensVac() - 0.0011);
         return a;
     }
 

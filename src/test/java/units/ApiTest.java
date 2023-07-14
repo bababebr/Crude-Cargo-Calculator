@@ -11,7 +11,7 @@ public class ApiTest {
     @Test
     public void fromApi() {
         Api a = Api.fromApi(33.5);
-        assertEquals(0.8571, a.getDens(), .1);
+        assertEquals(0.8571, a.getDensVac(), .1);
     }
 
     @Test
