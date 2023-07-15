@@ -33,10 +33,4 @@ public class Vcf6A {
         return Math.exp(a * (temperature.getFahrenheit() - 60) * b * -1);
     }
 
-    public static void main(String[] args) {
-        Vcf6A vcf6A = new Vcf6A(Api.fromApi(29.6), Temperature.fromCelius(12.78));
-        System.out.println(vcf6A.a);
-        System.out.println(vcf6A.b);
-        System.out.println(vcf6A.getVcf());
-    }
 }

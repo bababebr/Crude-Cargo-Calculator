@@ -7,5 +7,4 @@ public enum TablesEnum {
     Table6B,
     Table54A,
     Table54B;
-
 }

@@ -30,6 +30,7 @@ public class Vcf54A {
     }
 
     private double calcVcf() {
-        return Math.exp(a * (temperature.getFahrenheit() - 15) * b * -1);
+        return Math.exp(a * (temperature.getCelsius() - 15) * b * -1);
     }
+
 }
