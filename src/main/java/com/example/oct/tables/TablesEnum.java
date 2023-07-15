@@ -1,4 +1,4 @@
-package tables;
+package com.example.oct.tables;
 
 
 public enum TablesEnum {

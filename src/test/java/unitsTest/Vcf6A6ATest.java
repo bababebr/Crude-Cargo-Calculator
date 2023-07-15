@@ -1,9 +1,10 @@
-package units;
+package unitsTest;
 
+import com.example.oct.units.Api;
+import com.example.oct.units.Temperature;
+import com.example.oct.units.vcf.Vcf54A;
+import com.example.oct.units.vcf.Vcf6A;
 import org.junit.jupiter.api.Test;
-import tables.TablesEnum;
-import units.vcf.Vcf54A;
-import units.vcf.Vcf6A;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

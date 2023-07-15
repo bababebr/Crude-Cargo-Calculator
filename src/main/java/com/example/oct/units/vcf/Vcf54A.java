@@ -1,8 +1,8 @@
-package units.vcf;
+package com.example.oct.units.vcf;
 
+import com.example.oct.units.Api;
+import com.example.oct.units.Temperature;
 import lombok.Data;
-import units.Api;
-import units.Temperature;
 
 @Data
 public class Vcf54A {

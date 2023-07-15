@@ -1,7 +1,7 @@
-package units;
+package unitsTest;
 
 
-import org.junit.jupiter.api.Assertions;
+import com.example.oct.units.Temperature;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

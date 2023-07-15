@@ -1,4 +1,4 @@
-package units;
+package com.example.oct.units;
 
 import lombok.Data;
 
@@ -26,10 +26,16 @@ public class Api {
     }
 
     private double toApi(double dens) {
-        return (141.5d / dens) - 131.5;
+        return (141.5d / dens) - 131.5d;
     }
 
     private double toDens(double api) {
-        return 141.5d / (131.5 + api);
+        return 141.5d / (131.5d + api);
+    }
+
+    public static void main(String[] args) {
+        Api api = Api.fromApi(15);
+        System.out.println(api.getDensVac());
+        System.out.println(api.getDensAir());
     }
 }

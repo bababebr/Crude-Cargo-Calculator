@@ -1,8 +1,8 @@
-package units.vcf;
+package com.example.oct.units.vcf;
 
+import com.example.oct.units.Api;
+import com.example.oct.units.Temperature;
 import lombok.Data;
-import units.Api;
-import units.Temperature;
 
 @Data
 public class Vcf6A {
@@ -31,5 +31,12 @@ public class Vcf6A {
 
     private double calcVcf() {
         return Math.exp(a * (temperature.getFahrenheit() - 60) * b * -1);
+    }
+
+    public static void main(String[] args) {
+        Vcf6A vcf6A = new Vcf6A(Api.fromApi(29.6), Temperature.fromCelius(12.78));
+        System.out.println(vcf6A.a);
+        System.out.println(vcf6A.b);
+        System.out.println(vcf6A.getVcf());
     }
 }
