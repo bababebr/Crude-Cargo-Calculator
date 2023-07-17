@@ -1,7 +1,7 @@
 package com.example.oct.tables;
 
 
-public enum TablesEnum {
+public enum Tables {
     Table6,
     Table6A,
     Table6B,

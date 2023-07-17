@@ -32,10 +32,4 @@ public class Api {
     private double toDens(double api) {
         return 141.5d / (131.5d + api);
     }
-
-    public static void main(String[] args) {
-        Api api = Api.fromApi(15);
-        System.out.println(api.getDensVac());
-        System.out.println(api.getDensAir());
-    }
 }

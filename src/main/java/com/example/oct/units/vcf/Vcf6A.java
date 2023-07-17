@@ -2,10 +2,14 @@ package com.example.oct.units.vcf;
 
 import com.example.oct.units.Api;
 import com.example.oct.units.Temperature;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 @Data
-public class Vcf6A {
+public class Vcf6A implements Vcf {
     private Api api;
     private Temperature temperature;
 
@@ -18,7 +22,23 @@ public class Vcf6A {
         this.temperature = t;
         a = calcA();
         b = calcB();
-        vcf = calcVcf();
+        vcf = this.getVcf();
+    }
+
+    public static Vcf6A create(Api api, Temperature temperature) {
+        return new Vcf6A(api, temperature);
+    }
+
+    public double getVcf() {
+        return Math.exp(a * (temperature.getFahrenheit() - 60) * b * -1);
+    }
+
+    public Api getApi() {
+        return api;
+    }
+
+    public Temperature getTemp() {
+        return temperature;
     }
 
     private double calcA() {
@@ -28,9 +48,4 @@ public class Vcf6A {
     private double calcB() {
         return 1 + 0.8d * a * (temperature.getFahrenheit() - 60);
     }
-
-    private double calcVcf() {
-        return Math.exp(a * (temperature.getFahrenheit() - 60) * b * -1);
-    }
-
 }
