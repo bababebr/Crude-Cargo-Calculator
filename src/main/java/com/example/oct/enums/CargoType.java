@@ -1,4 +1,4 @@
-package com.example.oct.cargo;
+package com.example.oct.enums;
 
 public enum CargoType {
     CRUDE,

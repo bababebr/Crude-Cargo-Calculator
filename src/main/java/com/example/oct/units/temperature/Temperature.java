@@ -1,4 +1,4 @@
-package com.example.oct.units;
+package com.example.oct.units.temperature;
 
 import lombok.Data;
 

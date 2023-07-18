@@ -1,9 +1,8 @@
 package com.example.oct.units.vcf;
 
-import com.example.oct.units.Api;
-import com.example.oct.units.Temperature;
+import com.example.oct.units.api.Api;
+import com.example.oct.units.temperature.Temperature;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 public class Vcf54A implements Vcf {

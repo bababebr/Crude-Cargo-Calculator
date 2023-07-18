@@ -15,7 +15,6 @@ public class Tank {
 
     final Cargo cargo;
     double ullage;
-
     double bblsTov = 0;
     double cubTov = 0;
 
@@ -39,6 +38,4 @@ public class Tank {
         tank.setCubTov(bblsTov / 6.28981);
         return tank;
     }
-
-
 }

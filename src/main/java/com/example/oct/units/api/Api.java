@@ -1,4 +1,4 @@
-package com.example.oct.units;
+package com.example.oct.units.api;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package unitsTest;
 
-import com.example.oct.units.Api;
+import com.example.oct.units.api.Api;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

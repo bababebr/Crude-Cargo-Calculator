@@ -1,13 +1,11 @@
-package com.example.oct.tables;
+package com.example.oct.units.wcf;
 
-import com.example.oct.units.Api;
-import com.example.oct.units.Temperature;
+import com.example.oct.enums.Tables;
 import com.example.oct.units.vcf.Vcf;
-import com.example.oct.units.vcf.Vcf6A;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(staticName = "create")
-public class AstmTable {
+public class Wcf {
 
     private final Vcf vcf;
     private final Tables tables;

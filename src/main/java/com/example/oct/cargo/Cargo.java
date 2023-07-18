@@ -1,12 +1,12 @@
 package com.example.oct.cargo;
 
-import com.example.oct.units.Api;
-import com.example.oct.units.Temperature;
+import com.example.oct.enums.CargoType;
+import com.example.oct.units.api.Api;
+import com.example.oct.units.temperature.Temperature;
 import com.example.oct.units.vcf.Vcf;
 import com.example.oct.units.vcf.Vcf54A;
 import com.example.oct.units.vcf.Vcf6A;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;

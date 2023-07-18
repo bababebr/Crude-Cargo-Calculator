@@ -1,12 +1,12 @@
 package com.example.oct;
 
 import com.example.oct.cargo.Cargo;
-import com.example.oct.cargo.CargoType;
-import com.example.oct.tables.Tables;
+import com.example.oct.enums.CargoType;
+import com.example.oct.enums.Tables;
 import com.example.oct.tank.Tank;
 import com.example.oct.ullageReport.UllageReport;
-import com.example.oct.units.Api;
-import com.example.oct.units.Temperature;
+import com.example.oct.units.api.Api;
+import com.example.oct.units.temperature.Temperature;
 
 public class test {
 

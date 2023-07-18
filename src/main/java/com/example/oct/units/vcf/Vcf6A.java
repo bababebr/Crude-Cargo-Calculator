@@ -1,12 +1,8 @@
 package com.example.oct.units.vcf;
 
-import com.example.oct.units.Api;
-import com.example.oct.units.Temperature;
-import lombok.AllArgsConstructor;
+import com.example.oct.units.api.Api;
+import com.example.oct.units.temperature.Temperature;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
 @Data
 public class Vcf6A implements Vcf {
