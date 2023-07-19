@@ -1,9 +1,10 @@
 package com.example.oct.ullage;
 
+import com.example.oct.ullage.dto.UllageDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ullage")
@@ -16,9 +17,9 @@ public class UllageController {
         this.service = service;
     }
 
-    @GetMapping
-    public String get(){
-        return service.get(1L).getName();
+    @GetMapping()
+    public UllageDto getUll(@RequestParam double ullage, @RequestParam String name) {
+        return service.getUll(ullage, name);
     }
 
 }
