@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class Wcf {
 
     private final Vcf vcf;
-    private final Tables tables;
 
     public double getT11() {
         return (0.0375 * ((589.943 / (vcf.getApi().getApi() + 131.5)) - 0.0050789) * 100000 + 0.5) / 100000;

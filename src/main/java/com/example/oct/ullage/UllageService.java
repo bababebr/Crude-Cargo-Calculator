@@ -22,7 +22,15 @@ public class UllageService implements IUllageService {
         return UllageMapper.ullageToDto(repository.findById(id).get());
     }
 
+
+    /**
+     *
+     * @param ullage
+     * @param name
+     * @return Return row from calibration tables, makes interpolation if it requires.
+     */
     public UllageDto getUllageInfo(double ullage, String name) {
+        if(!repository.existsByName(name)) throw new NoSuchElementException("Vessel don't have tank " + name);
         Ullage ull = repository.findByUllageAndName(ullage, name);
         if (ull != null) {
             return UllageMapper.ullageToDto(ull);
@@ -37,6 +45,13 @@ public class UllageService implements IUllageService {
         }
     }
 
+    /**
+     *
+     * @param ullageDto
+     * @param trim
+     * @return Return short ullage Dto with tank name, ullage and Volume in m3 taken from calibration tables and with
+     * trim correction applied
+     */
     public UllageDtoShort getUllage(UllageDto ullageDto, double trim) {
         double trimVolume;
         if (Math.abs(trim) <= 0.0001) {
@@ -55,6 +70,12 @@ public class UllageService implements IUllageService {
         return UllageDtoShort.create(ullageDto.getName(), ullageDto.getUllage(), trimVolume);
     }
 
+    /**
+     *
+     * @param ullages
+     * @param actual
+     * @return private function for the interpolation between two ullages in tables
+     */
     private UllageDto calcUllageDto(List<UllageDto> ullages, double actual) {
         if (ullages.size() > 2) throw new IllegalStateException("Calculation can me done only between two ullages");
         UllageDto prevUllage = ullages.get(0);
@@ -81,8 +102,6 @@ public class UllageService implements IUllageService {
                                            double trimUp, double trim) {
 
         return volumeLow - (volumeLow - volumeUp) * ((trim - trimLow) / (trimUp - trimLow));
-
     }
-
 
 }

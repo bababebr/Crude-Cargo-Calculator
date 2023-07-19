@@ -37,7 +37,7 @@ public class Vcf54A implements Vcf {
     }
 
     private double calcA() {
-        return 613.9723d / Math.pow(api.getDensVac() * 1000, 2);
+        return 613.9723d / Math.pow(api.getSpecificGravity() * 1000, 2);
     }
 
     private double calcB() {

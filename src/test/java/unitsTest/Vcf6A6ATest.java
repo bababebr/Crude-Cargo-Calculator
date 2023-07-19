@@ -27,7 +27,7 @@ public class Vcf6A6ATest {
         System.out.println(temperature.getCelsius());
         System.out.println(vcf54A.getA());
         System.out.println(vcf54A.getB());
-        System.out.println(api.getDensVac());
+        System.out.println(api.getSpecificGravity());
         System.out.println(api.getDensAir());
         assertEquals(vcf54A.getVcf(),0.9238d, 0.0001);
     }
