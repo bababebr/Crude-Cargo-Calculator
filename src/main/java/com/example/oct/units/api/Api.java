@@ -49,7 +49,6 @@ public class Api {
         if (api > 16.74) return specGravity - 0.0005;
         if (api > 3.31) return specGravity - 0.0006;
         else return specGravity - 0.0007;
-
     }
 
     public double fromDensVacToSpecificGravity(double densVac) {
