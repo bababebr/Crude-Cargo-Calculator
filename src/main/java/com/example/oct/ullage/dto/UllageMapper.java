@@ -7,12 +7,18 @@ public class UllageMapper {
     public static UllageDto ullageToDto(Ullage ullage) {
         return UllageDto.create(ullage.getName(),
                 ullage.getUllage(),
-                ullage.getVol1F(),
-                ullage.getVolEK(),
-                ullage.getVol1A(),
-                ullage.getVol2A(),
-                ullage.getVol3A(),
-                ullage.getVol4A());
+                ullage.getTovCub1F(),
+                ullage.getTovCubEk(),
+                ullage.getTovCub1A(),
+                ullage.getTovCub2A(),
+                ullage.getTovCub3A(),
+                ullage.getTovCub4A());
+    }
+
+    public static UllageDtoShort DtoToShort(UllageDto ullageDto, double volume) {
+        return UllageDtoShort.create(ullageDto.getName(),
+                ullageDto.getUllage(),
+                volume);
     }
 
 }

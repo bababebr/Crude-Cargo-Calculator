@@ -22,16 +22,16 @@ public class Ullage {
     String name;
     Double ullage;
     @Column(name = "CUB1F")
-    Double vol1F;
+    Double TovCub1F;
     @Column(name = "CUB")
-    Double volEK;
+    Double TovCubEk;
     @Column(name = "CUB1A")
-    Double vol1A;
+    Double TovCub1A;
     @Column(name = "CUB2A")
-    Double vol2A;
+    Double TovCub2A;
     @Column(name = "CUB3A")
-    Double vol3A;
+    Double TovCub3A;
     @Column(name = "CUB4A")
-    Double vol4A;
+    Double TovCub4A;
 
 }

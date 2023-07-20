@@ -1,6 +1,7 @@
 package com.example.oct.ullage;
 
 import com.example.oct.ullage.dto.UllageDto;
+import com.example.oct.ullage.dto.UllageDtoShort;
 import com.example.oct.ullage.dto.UllageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,15 @@ public class UllageService implements IUllageService {
         return UllageMapper.ullageToDto(repository.findById(id).get());
     }
 
-    public UllageDto getUll(double ullage, String name) {
+
+    /**
+     *
+     * @param ullage
+     * @param name
+     * @return Return row from calibration tables, makes interpolation if it requires.
+     */
+    public UllageDto getUllageInfo(double ullage, String name) {
+        if(!repository.existsByName(name)) throw new NoSuchElementException("Vessel don't have tank " + name);
         Ullage ull = repository.findByUllageAndName(ullage, name);
         if (ull != null) {
             return UllageMapper.ullageToDto(ull);
@@ -36,27 +45,63 @@ public class UllageService implements IUllageService {
         }
     }
 
+    /**
+     *
+     * @param ullageDto
+     * @param trim
+     * @return Return short ullage Dto with tank name, ullage and Volume in m3 taken from calibration tables and with
+     * trim correction applied
+     */
+    public UllageDtoShort getUllage(UllageDto ullageDto, double trim) {
+        double trimVolume;
+        if (Math.abs(trim) <= 0.0001) {
+            return UllageDtoShort.create(ullageDto.getName(), ullageDto.getUllage(), ullageDto.getTovCubEK());
+        } else if (trim <= 0) {
+            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub1F(), ullageDto.getTovCubEK(), -1, 0, trim);
+        } else if (trim <= 1) {
+            trimVolume = calculateUllageWithTrim(ullageDto.getTovCubEK(), ullageDto.getTovCub1A(), 0, 1, trim);
+        } else if (trim <= 2) {
+            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub1A(), ullageDto.getTovCub2A(), 1, 2, trim);
+        } else if (trim <= 3) {
+            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub2A(), ullageDto.getTovCub3A(), 2, 3, trim);
+        } else if (trim <= 4) {
+            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub3A(), ullageDto.getTovCub4A(), 3, 4, trim);
+        } else throw new IllegalStateException("Trim is out of table limits");
+        return UllageDtoShort.create(ullageDto.getName(), ullageDto.getUllage(), trimVolume);
+    }
+
+    /**
+     *
+     * @param ullages
+     * @param actual
+     * @return private function for the interpolation between two ullages in tables
+     */
     private UllageDto calcUllageDto(List<UllageDto> ullages, double actual) {
-        if(ullages.size() > 2) throw new IllegalStateException("Calculation can me done only between two ullages");
+        if (ullages.size() > 2) throw new IllegalStateException("Calculation can me done only between two ullages");
         UllageDto prevUllage = ullages.get(0);
         UllageDto nextUllage = ullages.get(1);
 
-        double volEK = prevUllage.getVolEK() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
-                * (nextUllage.getVolEK() - prevUllage.getVolEK());
-        double vol1F = prevUllage.getVol1F() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
-                * (nextUllage.getVol1F() - prevUllage.getVol1F());
-        double vol1A = prevUllage.getVol1A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
-                * (nextUllage.getVol1A() - prevUllage.getVol1A());
-        double vol2A = prevUllage.getVol2A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
-                * (nextUllage.getVol2A() - prevUllage.getVol2A());
-        double vol3A = prevUllage.getVol3A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
-                * (nextUllage.getVol3A() - prevUllage.getVol3A());
-        double vol4A = prevUllage.getVol4A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
-                * (nextUllage.getVol1A() - prevUllage.getVol4A());
+        double volEK = prevUllage.getTovCubEK() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+                * (nextUllage.getTovCubEK() - prevUllage.getTovCubEK());
+        double vol1F = prevUllage.getTovCub1F() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+                * (nextUllage.getTovCub1F() - prevUllage.getTovCub1F());
+        double vol1A = prevUllage.getTovCub1A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+                * (nextUllage.getTovCub1A() - prevUllage.getTovCub1A());
+        double vol2A = prevUllage.getTovCub2A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+                * (nextUllage.getTovCub2A() - prevUllage.getTovCub2A());
+        double vol3A = prevUllage.getTovCub3A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+                * (nextUllage.getTovCub3A() - prevUllage.getTovCub3A());
+        double vol4A = prevUllage.getTovCub4A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+                * (nextUllage.getTovCub1A() - prevUllage.getTovCub4A());
 
         return UllageDto.create(prevUllage.getName(), actual, vol1F, volEK, vol1A, vol2A, vol3A, vol4A);
 
     }
 
+    private double calculateUllageWithTrim(double volumeLow, double volumeUp, double trimLow,
+                                           double trimUp, double trim) {
+
+        return volumeLow - (volumeLow - volumeUp) * ((trim - trimLow) / (trimUp - trimLow));
+    }
 
 }
