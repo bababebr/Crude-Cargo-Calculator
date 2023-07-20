@@ -68,14 +68,4 @@ public class Vcf6B implements Vcf {
     private double vcf() {
         return Math.exp(cor2 * (temperature.getFahrenheit() - 60) * cor3 * -1);
     }
-
-    public static void main(String[] args) {
-        Api api1 = Api.fromApi(27.5);
-        System.out.println(api1);
-        Temperature t = Temperature.fromFahrenheit(109.5);
-        Vcf vcf1 = Vcf6B.create(api1, t);
-        System.out.println(vcf1);
-    }
-
-
 }
