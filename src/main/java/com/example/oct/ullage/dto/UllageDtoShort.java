@@ -1,29 +1,22 @@
 package com.example.oct.ullage.dto;
 
-import com.example.oct.units.api.Api;
-import com.example.oct.units.temperature.Temperature;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Getter
 @Setter
-@AllArgsConstructor(staticName = "create")
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor(staticName = "create")
 public class UllageDtoShort {
 
     String name;
     Double ullage;
-    Api api;
-    Temperature temperature;
     Double tovCub;
-    Double tovBbls;
-    Double govCub;
-    Double govBbls;
-    Double gsvCub;
-    Double gsvBbls;
-    Double longTons;
-    Double metricTons;
     Double vcf;
+    Double GsvBbls;
+    Double gsvCub;
+    Double metricTons;
+    Double LongTons;
+
 }

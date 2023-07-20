@@ -1,7 +1,7 @@
 package com.example.oct.ullage;
 
 import com.example.oct.enums.Tables;
-import com.example.oct.ullage.dto.UllageDto;
+import com.example.oct.ullage.dto.UllageDtoFull;
 import com.example.oct.ullage.dto.UllageDtoShort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,8 @@
 package com.example.oct.ullage;
 
 import com.example.oct.enums.Tables;
-import com.example.oct.ullage.dto.UllageDto;
+import com.example.oct.ullage.dto.CalibrationTableDto;
+import com.example.oct.ullage.dto.UllageDtoFull;
 import com.example.oct.ullage.dto.UllageDtoShort;
 import com.example.oct.ullage.dto.UllageMapper;
 import com.example.oct.units.api.Api;
@@ -23,7 +24,7 @@ public class UllageService implements IUllageService {
 
     private final UllageRepository repository;
 
-    public UllageDto getById(Long id) {
+    public CalibrationTableDto getById(Long id) {
         return UllageMapper.ullageToDto(repository.findById(id).get());
     }
 
@@ -33,29 +34,29 @@ public class UllageService implements IUllageService {
      * @param name
      * @return Return row from calibration tables, makes interpolation if it requires.
      */
-    public UllageDto getUllageInfo(double ullage, String name) {
+    public CalibrationTableDto getUllageInfo(double ullage, String name) {
         if (!repository.existsByName(name)) throw new NoSuchElementException("Vessel don't have tank " + name);
         Ullage ull = repository.findByUllageAndName(ullage, name);
         if (ull != null) {
             return UllageMapper.ullageToDto(ull);
         } else {
-            Ullage prevUllage = repository.getNextUllage(name, ullage, PageRequest.of(0, 1)).get(0);
-            Ullage nextUllage = repository.findById(prevUllage.getId() + 1).
-                    orElseThrow(() -> new NoSuchElementException("Ullage you entered is to high"));
+            Ullage nextUllage = repository.getNextUllage(name, ullage, PageRequest.of(0, 1)).get(0);
+            Ullage prevUllage = repository.findById(nextUllage.getId() - 1)
+                    .orElseThrow(() -> new NoSuchElementException("Ullage you entered is to low"));
 
-            UllageDto actualUllageDto = calcUllageDto(List.of(UllageMapper.ullageToDto(prevUllage),
+            CalibrationTableDto actualCalibrationTableDto = calcUllageDto(List.of(UllageMapper.ullageToDto(prevUllage),
                     UllageMapper.ullageToDto(nextUllage)), ullage);
-            return actualUllageDto;
+            return actualCalibrationTableDto;
         }
     }
 
     /**
-     * @param ullageDto
+     * @param calibrationTableDto
      * @param trim
      * @return Return short ullage Dto with tank name, ullage and Volume in m3 taken from calibration tables and with
      * trim correction applied
      */
-    public UllageDtoShort getUllage(UllageDto ullageDto, double trim, double api, double temp, Tables tables) {
+    public UllageDtoShort getUllage(CalibrationTableDto calibrationTableDto, double trim, double api, double temp, Tables tables) {
         Api apiDens;
         Temperature temperature;
         if (tables.equals(Tables.Table6A) || tables.equals(Tables.Table6B)) {
@@ -69,32 +70,36 @@ public class UllageService implements IUllageService {
         double trimVolume;
 
         if (trim < 0) {
-            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub1F(), ullageDto.getTovCubEK(), -1, 0, trim);
+            trimVolume = calculateUllageWithTrim(calibrationTableDto.getTovCub1F(), calibrationTableDto.getTovCubEK(), -1, 0, trim);
         } else if (Math.abs(trim) <= 0.01) {
-            return getUllageDto(ullageDto, apiDens, temperature, tables, ullageDto.getTovCubEK());
+            System.out.println(trim);
+            return UllageMapper.dtoFullToShor(getUllageDto(calibrationTableDto, apiDens, temperature, tables, calibrationTableDto.getTovCubEK()));
         } else if (trim <= 1) {
-            trimVolume = calculateUllageWithTrim(ullageDto.getTovCubEK(), ullageDto.getTovCub1A(), 0, 1, trim);
+            trimVolume = calculateUllageWithTrim(calibrationTableDto.getTovCubEK(), calibrationTableDto.getTovCub1A(), 0, 1, trim);
         } else if (trim <= 2) {
-            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub1A(), ullageDto.getTovCub2A(), 1, 2, trim);
+            trimVolume = calculateUllageWithTrim(calibrationTableDto.getTovCub1A(), calibrationTableDto.getTovCub2A(), 1, 2, trim);
         } else if (trim <= 3) {
-            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub2A(), ullageDto.getTovCub3A(), 2, 3, trim);
+            trimVolume = calculateUllageWithTrim(calibrationTableDto.getTovCub2A(), calibrationTableDto.getTovCub3A(), 2, 3, trim);
         } else if (trim <= 4) {
-            trimVolume = calculateUllageWithTrim(ullageDto.getTovCub3A(), ullageDto.getTovCub4A(), 3, 4, trim);
+            trimVolume = calculateUllageWithTrim(calibrationTableDto.getTovCub3A(), calibrationTableDto.getTovCub4A(), 3, 4, trim);
         } else throw new IllegalStateException("Trim is out of table limits");
-        System.out.println(trim);
-        return getUllageDto(ullageDto, apiDens, temperature, tables, trimVolume);
-    }
 
+        return UllageMapper.dtoFullToShor(getUllageDto(calibrationTableDto, apiDens, temperature, tables, trimVolume));
+    }
+    /**
+     * TODO refactor mean ullage calculation
+     */
     /**
      * @param ullages
      * @param actual
      * @return private function for the interpolation between two ullages in tables
      */
-    private UllageDto calcUllageDto(List<UllageDto> ullages, double actual) {
+    private CalibrationTableDto calcUllageDto(List<CalibrationTableDto> ullages, double actual) {
         if (ullages.size() > 2) throw new IllegalStateException("Calculation can me done only between two ullages");
-        UllageDto prevUllage = ullages.get(0);
-        UllageDto nextUllage = ullages.get(1);
-
+        CalibrationTableDto prevUllage = ullages.get(0);
+        CalibrationTableDto nextUllage = ullages.get(1);
+        System.out.println(prevUllage.getTovCubEK());
+        System.out.println(nextUllage.getTovCubEK());
         double volEK = prevUllage.getTovCubEK() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
                 * (nextUllage.getTovCubEK() - prevUllage.getTovCubEK());
         double vol1F = prevUllage.getTovCub1F() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
@@ -108,7 +113,7 @@ public class UllageService implements IUllageService {
         double vol4A = prevUllage.getTovCub4A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
                 * (nextUllage.getTovCub1A() - prevUllage.getTovCub4A());
 
-        return UllageDto.create(prevUllage.getName(), actual, vol1F, volEK, vol1A, vol2A, vol3A, vol4A);
+        return CalibrationTableDto.create(prevUllage.getName(), actual, vol1F, volEK, vol1A, vol2A, vol3A, vol4A);
 
     }
 
@@ -118,8 +123,17 @@ public class UllageService implements IUllageService {
         return volumeLow - (volumeLow - volumeUp) * ((trim - trimLow) / (trimUp - trimLow));
     }
 
-    private UllageDtoShort getUllageDto(UllageDto dto, Api api, Temperature temperature, Tables tables, double tovCub) {
-        UllageDtoShort result = UllageDtoShort.create(dto.getName(), dto.getUllage(), api, temperature, tovCub, 0d,
+    /**
+     *
+     * @param dto
+     * @param api
+     * @param temperature
+     * @param tables
+     * @param tovCub
+     * @return Ullage with full info.
+     */
+    private UllageDtoFull getUllageDto(CalibrationTableDto dto, Api api, Temperature temperature, Tables tables, double tovCub) {
+        UllageDtoFull result = UllageDtoFull.create(dto.getName(), dto.getUllage(), api, temperature, tovCub, 0d,
                 0d, 0d, 0d, 0d, 0d, 0d, null);
         Vcf vcf;
         result.setTovBbls(tovCub * 6.28981);
