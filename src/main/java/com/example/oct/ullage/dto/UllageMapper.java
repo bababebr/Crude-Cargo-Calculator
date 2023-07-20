@@ -15,10 +15,4 @@ public class UllageMapper {
                 ullage.getTovCub4A());
     }
 
-    public static UllageDtoShort DtoToShort(UllageDto ullageDto, double volume) {
-        return UllageDtoShort.create(ullageDto.getName(),
-                ullageDto.getUllage(),
-                volume);
-    }
-
 }

@@ -1,8 +1,13 @@
 package com.example.oct.ullage;
 
+import com.example.oct.enums.Tables;
 import com.example.oct.ullage.dto.UllageDto;
 import com.example.oct.ullage.dto.UllageDtoShort;
 import com.example.oct.ullage.dto.UllageMapper;
+import com.example.oct.units.api.Api;
+import com.example.oct.units.temperature.Temperature;
+import com.example.oct.units.vcf.*;
+import com.example.oct.units.wcf.Wcf;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,13 +29,12 @@ public class UllageService implements IUllageService {
 
 
     /**
-     *
      * @param ullage
      * @param name
      * @return Return row from calibration tables, makes interpolation if it requires.
      */
     public UllageDto getUllageInfo(double ullage, String name) {
-        if(!repository.existsByName(name)) throw new NoSuchElementException("Vessel don't have tank " + name);
+        if (!repository.existsByName(name)) throw new NoSuchElementException("Vessel don't have tank " + name);
         Ullage ull = repository.findByUllageAndName(ullage, name);
         if (ull != null) {
             return UllageMapper.ullageToDto(ull);
@@ -46,18 +50,28 @@ public class UllageService implements IUllageService {
     }
 
     /**
-     *
      * @param ullageDto
      * @param trim
      * @return Return short ullage Dto with tank name, ullage and Volume in m3 taken from calibration tables and with
      * trim correction applied
      */
-    public UllageDtoShort getUllage(UllageDto ullageDto, double trim) {
+    public UllageDtoShort getUllage(UllageDto ullageDto, double trim, double api, double temp, Tables tables) {
+        Api apiDens;
+        Temperature temperature;
+        if (tables.equals(Tables.Table6A) || tables.equals(Tables.Table6B)) {
+            apiDens = Api.fromApi(api);
+            temperature = Temperature.fromFahrenheit(temp);
+        } else if (tables.equals(Tables.Table54A) || tables.equals(Tables.Table54B)) {
+            apiDens = Api.formDens(api);
+            temperature = Temperature.fromCelius(temp);
+        } else throw new IllegalStateException("Table is not supported.");
+
         double trimVolume;
-        if (Math.abs(trim) <= 0.0001) {
-            return UllageDtoShort.create(ullageDto.getName(), ullageDto.getUllage(), ullageDto.getTovCubEK());
-        } else if (trim <= 0) {
+
+        if (trim < 0) {
             trimVolume = calculateUllageWithTrim(ullageDto.getTovCub1F(), ullageDto.getTovCubEK(), -1, 0, trim);
+        } else if (Math.abs(trim) <= 0.01) {
+            return getUllageDto(ullageDto, apiDens, temperature, tables, ullageDto.getTovCubEK());
         } else if (trim <= 1) {
             trimVolume = calculateUllageWithTrim(ullageDto.getTovCubEK(), ullageDto.getTovCub1A(), 0, 1, trim);
         } else if (trim <= 2) {
@@ -67,11 +81,11 @@ public class UllageService implements IUllageService {
         } else if (trim <= 4) {
             trimVolume = calculateUllageWithTrim(ullageDto.getTovCub3A(), ullageDto.getTovCub4A(), 3, 4, trim);
         } else throw new IllegalStateException("Trim is out of table limits");
-        return UllageDtoShort.create(ullageDto.getName(), ullageDto.getUllage(), trimVolume);
+        System.out.println(trim);
+        return getUllageDto(ullageDto, apiDens, temperature, tables, trimVolume);
     }
 
     /**
-     *
      * @param ullages
      * @param actual
      * @return private function for the interpolation between two ullages in tables
@@ -102,6 +116,43 @@ public class UllageService implements IUllageService {
                                            double trimUp, double trim) {
 
         return volumeLow - (volumeLow - volumeUp) * ((trim - trimLow) / (trimUp - trimLow));
+    }
+
+    private UllageDtoShort getUllageDto(UllageDto dto, Api api, Temperature temperature, Tables tables, double tovCub) {
+        UllageDtoShort result = UllageDtoShort.create(dto.getName(), dto.getUllage(), api, temperature, tovCub, 0d,
+                0d, 0d, 0d, 0d, 0d, 0d, null);
+        Vcf vcf;
+        result.setTovBbls(tovCub * 6.28981);
+        result.setGovCub(tovCub);
+        result.setGovBbls(result.getTovBbls());
+        switch (tables) {
+            case Table6A:
+                vcf = Vcf6A.create(api, temperature);
+                break;
+            case Table6B:
+                vcf = Vcf6B.create(api, temperature);
+                break;
+            case Table54A:
+                vcf = Vcf54A.create(api, temperature);
+                break;
+            case Table54B:
+                vcf = Vcf54B.create(api, temperature);
+                break;
+            default:
+                throw new IllegalStateException("Table not exist");
+        }
+        Wcf wcf = Wcf.create(vcf);
+        if (tables.equals(Tables.Table54A) || tables.equals(Tables.Table54B)) {
+            result.setGsvCub(result.getGovCub() * vcf.getVcf());
+            result.setGsvBbls(result.getGsvCub() / wcf.getT52());
+        } else {
+            result.setGsvBbls(result.getGovBbls() * vcf.getVcf());
+            result.setGsvCub(result.getGsvBbls() * wcf.getT52());
+        }
+        result.setVcf(vcf.getVcf());
+        result.setMetricTons(wcf.getT13() * result.getGsvBbls());
+        result.setLongTons(wcf.getT11() * result.getGsvBbls());
+        return result;
     }
 
 }
