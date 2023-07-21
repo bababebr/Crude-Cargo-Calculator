@@ -4,8 +4,8 @@ import com.example.oct.ullage.Ullage;
 
 public class UllageMapper {
 
-    public static CalibrationTableDto ullageToDto(Ullage ullage) {
-        return CalibrationTableDto.create(ullage.getName(),
+    public static UllageDto ullageToDto(Ullage ullage) {
+        return UllageDto.create(ullage.getName(),
                 ullage.getUllage(),
                 ullage.getTovCub1F(),
                 ullage.getTovCubEk(),
@@ -25,5 +25,4 @@ public class UllageMapper {
                 ullageDtoFull.getMetricTons(),
                 ullageDtoFull.getLongTons());
     }
-
 }

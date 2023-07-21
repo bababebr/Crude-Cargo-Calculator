@@ -27,6 +27,10 @@ public class CargoService implements ICargoService {
     }
 
     @Override
+    public CargoDto findByName(String name) {
+        return CargoMapper.cargoToDto(repository.findByName(name));
+    }
+    @Override
     public CargoDto get(Long id) {
         return null;
     }

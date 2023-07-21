@@ -8,10 +8,12 @@ import java.util.List;
 @Service
 public interface ICargoService {
 
-    public CargoDto add(CargoDto cargoDto, boolean dens);
+    CargoDto add(CargoDto cargoDto, boolean dens);
 
-    public List<CargoDto> getAll();
+    List<CargoDto> getAll();
 
-    public CargoDto get(Long id);
+    CargoDto findByName(String name);
+
+    CargoDto get(Long id);
 
 }
