@@ -19,7 +19,7 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class UllageService implements IUllageService {
 
     private final UllageRepository repository;
@@ -86,9 +86,7 @@ public class UllageService implements IUllageService {
 
         return UllageMapper.dtoFullToShor(getUllageDto(calibrationTableDto, apiDens, temperature, tables, trimVolume));
     }
-    /**
-     * TODO refactor mean ullage calculation
-     */
+
     /**
      * @param ullages
      * @param actual
@@ -100,17 +98,23 @@ public class UllageService implements IUllageService {
         CalibrationTableDto nextUllage = ullages.get(1);
         System.out.println(prevUllage.getTovCubEK());
         System.out.println(nextUllage.getTovCubEK());
-        double volEK = prevUllage.getTovCubEK() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+        double volEK = prevUllage.getTovCubEK() + ((actual - prevUllage.getUllage())
+                / (nextUllage.getUllage() - prevUllage.getUllage()))
                 * (nextUllage.getTovCubEK() - prevUllage.getTovCubEK());
-        double vol1F = prevUllage.getTovCub1F() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+        double vol1F = prevUllage.getTovCub1F() + ((actual - prevUllage.getUllage())
+                / (nextUllage.getUllage() - prevUllage.getUllage()))
                 * (nextUllage.getTovCub1F() - prevUllage.getTovCub1F());
-        double vol1A = prevUllage.getTovCub1A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+        double vol1A = prevUllage.getTovCub1A() + ((actual - prevUllage.getUllage())
+                / (nextUllage.getUllage() - prevUllage.getUllage()))
                 * (nextUllage.getTovCub1A() - prevUllage.getTovCub1A());
-        double vol2A = prevUllage.getTovCub2A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+        double vol2A = prevUllage.getTovCub2A() + ((actual - prevUllage.getUllage())
+                / (nextUllage.getUllage() - prevUllage.getUllage()))
                 * (nextUllage.getTovCub2A() - prevUllage.getTovCub2A());
-        double vol3A = prevUllage.getTovCub3A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+        double vol3A = prevUllage.getTovCub3A() + ((actual - prevUllage.getUllage())
+                / (nextUllage.getUllage() - prevUllage.getUllage()))
                 * (nextUllage.getTovCub3A() - prevUllage.getTovCub3A());
-        double vol4A = prevUllage.getTovCub4A() + ((actual - prevUllage.getUllage()) / (nextUllage.getUllage() - actual))
+        double vol4A = prevUllage.getTovCub4A() + ((actual - prevUllage.getUllage())
+                / (nextUllage.getUllage() - prevUllage.getUllage()))
                 * (nextUllage.getTovCub1A() - prevUllage.getTovCub4A());
 
         return CalibrationTableDto.create(prevUllage.getName(), actual, vol1F, volEK, vol1A, vol2A, vol3A, vol4A);
@@ -124,7 +128,6 @@ public class UllageService implements IUllageService {
     }
 
     /**
-     *
      * @param dto
      * @param api
      * @param temperature
