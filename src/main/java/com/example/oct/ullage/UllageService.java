@@ -24,10 +24,6 @@ public class UllageService implements IUllageService {
 
     private final UllageRepository repository;
 
-    public UllageDto getById(Long id) {
-        return UllageMapper.ullageToDto(repository.findById(id).get());
-    }
-
     /**
      * @param ullage
      * @param name
@@ -43,7 +39,7 @@ public class UllageService implements IUllageService {
             Ullage prevUllage = repository.findById(nextUllage.getId() - 1)
                     .orElseThrow(() -> new NoSuchElementException("Ullage you entered is to low"));
 
-            UllageDto actualUllageDto = calcUllageDto(List.of(UllageMapper.ullageToDto(prevUllage),
+            UllageDto actualUllageDto = calculateActualUllage(List.of(UllageMapper.ullageToDto(prevUllage),
                     UllageMapper.ullageToDto(nextUllage)), ullage);
             return actualUllageDto;
         }
@@ -72,7 +68,7 @@ public class UllageService implements IUllageService {
             trimVolume = calculateUllageWithTrim(ullageDto.getTovCub1F(), ullageDto.getTovCubEK(), -1, 0, trim);
         } else if (Math.abs(trim) <= 0.01) {
             System.out.println(trim);
-            return UllageMapper.dtoFullToShor(getUllageDto(ullageDto, apiDens, temperature, tables, ullageDto.getTovCubEK()));
+            return UllageMapper.dtoFullToShor(calculateUllageWithFullInfo(ullageDto, apiDens, temperature, tables, ullageDto.getTovCubEK()));
         } else if (trim <= 1) {
             trimVolume = calculateUllageWithTrim(ullageDto.getTovCubEK(), ullageDto.getTovCub1A(), 0, 1, trim);
         } else if (trim <= 2) {
@@ -83,7 +79,7 @@ public class UllageService implements IUllageService {
             trimVolume = calculateUllageWithTrim(ullageDto.getTovCub3A(), ullageDto.getTovCub4A(), 3, 4, trim);
         } else throw new IllegalStateException("Trim is out of table limits");
 
-        return UllageMapper.dtoFullToShor(getUllageDto(ullageDto, apiDens, temperature, tables, trimVolume));
+        return UllageMapper.dtoFullToShor(calculateUllageWithFullInfo(ullageDto, apiDens, temperature, tables, trimVolume));
     }
 
     /**
@@ -91,7 +87,7 @@ public class UllageService implements IUllageService {
      * @param actual
      * @return private function for the interpolation between two ullages in tables
      */
-    private UllageDto calcUllageDto(List<UllageDto> ullages, double actual) {
+    private UllageDto calculateActualUllage(List<UllageDto> ullages, double actual) {
         if (ullages.size() > 2) throw new IllegalStateException("Calculation can me done only between two ullages");
         UllageDto prevUllage = ullages.get(0);
         UllageDto nextUllage = ullages.get(1);
@@ -120,6 +116,15 @@ public class UllageService implements IUllageService {
 
     }
 
+    /**
+     *
+     * @param volumeLow
+     * @param volumeUp
+     * @param trimLow
+     * @param trimUp
+     * @param trim
+     * @return Calculate volume m3 with trim
+     */
     private double calculateUllageWithTrim(double volumeLow, double volumeUp, double trimLow,
                                            double trimUp, double trim) {
 
@@ -134,7 +139,7 @@ public class UllageService implements IUllageService {
      * @param tovCub
      * @return Ullage with full info.
      */
-    private UllageDtoFull getUllageDto(UllageDto dto, Api api, Temperature temperature, Tables tables, double tovCub) {
+    private UllageDtoFull calculateUllageWithFullInfo(UllageDto dto, Api api, Temperature temperature, Tables tables, double tovCub) {
         UllageDtoFull result = UllageDtoFull.create(dto.getName(), dto.getUllage(), api, temperature, tovCub, 0d,
                 0d, 0d, 0d, 0d, 0d, 0d, null);
         Vcf vcf;

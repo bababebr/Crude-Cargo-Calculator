@@ -30,30 +30,4 @@ public class Cargo {
     Double temp_c;
     @Column(name = "temp_f")
     Double temp_f;
-
-    public static Cargo fromApi(String name, CargoType type, double api, double temp_f) {
-        Api api1 = Api.fromApi(api);
-        Temperature t = Temperature.fromFahrenheit(temp_f);
-        Cargo cargo = new Cargo();
-        cargo.setName(name);
-        cargo.setType(type);
-        cargo.setApi(api);
-        cargo.setTemp_f(temp_f);
-        cargo.setDensity(api1.getDensVac());
-        cargo.setTemp_c(t.getCelsius());
-        return cargo;
-    }
-
-    public static Cargo fromDensity(String name, CargoType type, double density, double temp_c) {
-        Api api1 = Api.formDens(density);
-        Temperature t = Temperature.fromCelius(temp_c);
-        Cargo cargo = new Cargo();
-        cargo.setName(name);
-        cargo.setType(type);
-        cargo.setDensity(density);
-        cargo.setTemp_c(temp_c);
-        cargo.setDensity(api1.getApi());
-        cargo.setTemp_c(t.getFahrenheit());
-        return cargo;
-    }
 }

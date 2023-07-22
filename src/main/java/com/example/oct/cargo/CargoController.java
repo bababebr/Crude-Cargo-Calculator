@@ -2,6 +2,7 @@ package com.example.oct.cargo;
 
 import com.example.oct.cargo.dto.CargoDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cargo")
-@RequiredArgsConstructor
 public class CargoController {
 
     private final ICargoService cargoService;
+
+    @Autowired
+    public CargoController(ICargoService cargoService) {
+        this.cargoService = cargoService;
+    }
 
     @PostMapping
     public CargoDto add(@Validated @RequestBody CargoDto cargoDto,

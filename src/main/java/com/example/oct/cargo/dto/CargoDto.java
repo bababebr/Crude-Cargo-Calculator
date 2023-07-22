@@ -19,6 +19,10 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor(staticName = "create")
 public class CargoDto {
 
+    /**
+     * TODO change API & TEMPERATURE from Double to Api and temp Objects
+     */
+
     @NotNull
     final String name;
     @NotNull
@@ -28,6 +32,13 @@ public class CargoDto {
     Double temp_f;
     Double temp_c;
 
+
+    /**
+     * Set up CargoDto depends on units using (api@tF or dens@tC)
+     * @param cargoDto
+     * @param densCelc
+     * @return
+     */
     public static CargoDto setUp(CargoDto cargoDto, boolean densCelc) {
         Api api1;
         Temperature t;

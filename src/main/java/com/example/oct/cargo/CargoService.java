@@ -1,19 +1,23 @@
 package com.example.oct.cargo;
 
 import com.example.oct.cargo.dto.CargoDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CargoService implements ICargoService {
 
-    @Autowired
     private final CargoRepository repository;
+
+    @Autowired
+    public CargoService(CargoRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public CargoDto add(CargoDto cargoDto, boolean dens) {
         CargoDto dto = CargoDto.setUp(cargoDto, dens);
@@ -28,10 +32,13 @@ public class CargoService implements ICargoService {
 
     @Override
     public CargoDto findByName(String name) {
-        return CargoMapper.cargoToDto(repository.findByName(name));
+        return CargoMapper.cargoToDto(repository.findByName(name).orElseThrow(
+                () -> new NoSuchElementException("Cargo with NAME=" + name + " not found.")));
     }
+
     @Override
     public CargoDto get(Long id) {
-        return null;
+        return CargoMapper.cargoToDto(repository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Cargo with ID=" + id + " not found.")));
     }
 }
