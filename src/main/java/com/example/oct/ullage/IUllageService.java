@@ -1,12 +1,12 @@
 package com.example.oct.ullage;
 
-import com.example.oct.ullage.dto.CalibrationTableDto;
+import com.example.oct.ullage.dto.UllageDto;
 
 public interface IUllageService {
 
-    CalibrationTableDto getById(Long id);
+    UllageDto getById(Long id);
 
-    CalibrationTableDto getUllageInfo(double ullage, String name);
+    UllageDto getUllageInfo(double ullage, String name);
 
 
 }

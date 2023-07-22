@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "calibration_table")
+@Table(name = "CalibrationTable")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)

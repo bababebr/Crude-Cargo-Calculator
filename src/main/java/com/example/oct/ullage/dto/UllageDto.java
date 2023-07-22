@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 @Setter
-public class CalibrationTableDto {
+public class UllageDto {
 
     String name;
     double ullage;
