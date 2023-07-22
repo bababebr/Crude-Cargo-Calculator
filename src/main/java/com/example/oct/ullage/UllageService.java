@@ -28,16 +28,12 @@ public class UllageService implements IUllageService {
         return UllageMapper.ullageToDto(repository.findById(id).get());
     }
 
-    public UllageDto getByUllageAndTank(double ullage, String name) {
-        return UllageMapper.ullageToDto(repository.findByUllageAndName(ullage, name));
-    }
-
     /**
      * @param ullage
      * @param name
      * @return Return row from calibration tables, makes interpolation if it requires.
      */
-    public UllageDto getUllageInfo(double ullage, String name) {
+    public UllageDto getByUllageAndTank(double ullage, String name) {
         if (!repository.existsByName(name)) throw new NoSuchElementException("Vessel don't have tank " + name);
         Ullage ull = repository.findByUllageAndName(ullage, name);
         if (ull != null) {

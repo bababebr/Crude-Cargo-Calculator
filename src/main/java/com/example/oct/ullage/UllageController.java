@@ -1,7 +1,6 @@
 package com.example.oct.ullage;
 
 import com.example.oct.enums.Tables;
-import com.example.oct.ullage.dto.UllageDtoFull;
 import com.example.oct.ullage.dto.UllageDtoShort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class UllageController {
                                       @RequestParam double api,
                                       @RequestParam double temp,
                                       @RequestParam Tables table) {
-        return service.getUllage(service.getUllageInfo(ullage, name), trim, api, temp, table);
+        return service.getUllage(service.getByUllageAndTank(ullage, name), trim, api, temp, table);
     }
 
 

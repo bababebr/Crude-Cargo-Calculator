@@ -6,7 +6,7 @@ public interface IUllageService {
 
     UllageDto getById(Long id);
 
-    UllageDto getUllageInfo(double ullage, String name);
+    UllageDto getByUllageAndTank(double ullage, String name);
 
 
 }
