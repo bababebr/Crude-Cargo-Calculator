@@ -1,8 +1,6 @@
 package com.example.oct.cargo;
 
 import com.example.oct.enums.CargoType;
-import com.example.oct.units.api.Api;
-import com.example.oct.units.temperature.Temperature;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

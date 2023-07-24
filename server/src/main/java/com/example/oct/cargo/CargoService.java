@@ -20,14 +20,13 @@ public class CargoService implements ICargoService {
 
     @Override
     public CargoDto add(CargoDto cargoDto, boolean dens) {
-        CargoDto dto = CargoDto.setUp(cargoDto, dens);
-        repository.save(CargoMapper.dtoToCargo(dto));
-        return dto;
+        repository.save(CargoMapper.dtoToCargo(cargoDto));
+        return cargoDto;
     }
 
     @Override
     public List<CargoDto> getAll() {
-        return repository.findAll().stream().map(c -> CargoMapper.cargoToDto(c)).collect(Collectors.toList());
+        return repository.findAll().stream().map(CargoMapper::cargoToDto).collect(Collectors.toList());
     }
 
     @Override

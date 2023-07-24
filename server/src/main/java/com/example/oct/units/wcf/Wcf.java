@@ -1,6 +1,5 @@
 package com.example.oct.units.wcf;
 
-import com.example.oct.enums.Tables;
 import com.example.oct.units.vcf.Vcf;
 import lombok.RequiredArgsConstructor;
 
