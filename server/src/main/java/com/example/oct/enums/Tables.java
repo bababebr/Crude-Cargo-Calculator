@@ -12,6 +12,6 @@ public enum Tables {
     Table6A,
     Table6B,
     Table54A,
-    Table54B;
+    Table54B
 
 }

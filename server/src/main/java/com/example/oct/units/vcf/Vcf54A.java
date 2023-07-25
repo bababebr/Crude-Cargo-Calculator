@@ -13,7 +13,7 @@ public class Vcf54A implements Vcf {
     private double b;
     private double vcf;
 
-    private Vcf54A(Api api, Temperature t) {
+    public Vcf54A(Api api, Temperature t) {
         this.api = api;
         this.temperature = t;
         a = calcA();
