@@ -20,6 +20,7 @@ public class CargoService implements ICargoService {
 
     @Override
     public CargoDto add(CargoDto cargoDto, boolean dens) {
+
         repository.save(CargoMapper.dtoToCargo(cargoDto));
         return cargoDto;
     }
