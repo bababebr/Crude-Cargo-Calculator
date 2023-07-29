@@ -21,6 +21,7 @@ public class CargoController {
     @PostMapping
     public CargoDto add(@Validated @RequestBody CargoDto cargoDto,
                         @RequestParam boolean dens) {
+        System.out.println(cargoDto.getApi());
         return cargoService.add(cargoDto, dens);
     }
 

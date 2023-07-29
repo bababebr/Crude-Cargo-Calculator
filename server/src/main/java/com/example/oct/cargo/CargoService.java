@@ -1,6 +1,7 @@
 package com.example.oct.cargo;
 
 import com.example.oct.cargo.dto.CargoDto;
+import com.example.oct.units.api.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ public class CargoService implements ICargoService {
 
     @Override
     public CargoDto add(CargoDto cargoDto, boolean dens) {
-
         repository.save(CargoMapper.dtoToCargo(cargoDto));
         return cargoDto;
     }
@@ -41,4 +41,9 @@ public class CargoService implements ICargoService {
         return CargoMapper.cargoToDto(repository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("Cargo with ID=" + id + " not found.")));
     }
+
+/*    private Api setUpApi(CargoDto cargoDto) {
+        cargoDto.getApi()
+        return
+    }*/
 }

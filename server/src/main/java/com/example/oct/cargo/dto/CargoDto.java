@@ -20,7 +20,7 @@ public class CargoDto {
     final String name;
     @NotNull
     final CargoType type;
-    @com.example.oct.validation.annotation.Api
+    @NotNull
     Api api;
     @NotNull
     Temperature temperature;
