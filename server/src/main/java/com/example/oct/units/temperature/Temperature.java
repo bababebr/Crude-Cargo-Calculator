@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class Temperature {
 
-    private double celsius;
-    private double fahrenheit;
+    private Double celsius;
+    private Double fahrenheit;
 
     public static Temperature fromCelius(double celsius) {
         Temperature t = new Temperature();

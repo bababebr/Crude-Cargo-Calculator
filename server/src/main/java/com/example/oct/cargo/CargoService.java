@@ -31,7 +31,7 @@ public class CargoService implements ICargoService {
     }
 
     @Override
-    public CargoDto findByName(String name) {
+    public CargoDto getByName(String name) {
         return CargoMapper.cargoToDto(repository.findByName(name).orElseThrow(
                 () -> new NoSuchElementException("Cargo with NAME=" + name + " not found.")));
     }
@@ -42,8 +42,6 @@ public class CargoService implements ICargoService {
                 () -> new NoSuchElementException("Cargo with ID=" + id + " not found.")));
     }
 
-/*    private Api setUpApi(CargoDto cargoDto) {
-        cargoDto.getApi()
-        return
-    }*/
+
+
 }

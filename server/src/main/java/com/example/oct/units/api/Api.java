@@ -2,15 +2,16 @@ package com.example.oct.units.api;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.Value;
 
 @Data
 @ToString
 public class Api {
 
-    private double api;
-    private double specificGravity;
-    private double densAir;
-    private double densVac;
+    private Double api;
+    private Double specificGravity;
+    private Double densAir;
+    private Double densVac;
 
     public static Api fromApi(double api) {
         Api a = new Api();
@@ -57,12 +58,5 @@ public class Api {
         if (densVac >= 0.954 && densVac < 1.049) return densVac + 0.0006;
         else return densVac + 0.0007;
 
-    }
-
-    public static void main(String[] args) {
-        Api api1 = Api.fromApi(25);
-        System.out.println(api1);
-        Api api2 = Api.formDens(0.91);
-        System.out.println(api2);
     }
 }

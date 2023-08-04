@@ -1,27 +1,22 @@
 package com.example.oct.cargo;
 
 import com.example.oct.cargo.dto.CargoDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/cargo")
+@RequiredArgsConstructor
 public class CargoController {
 
     private final ICargoService cargoService;
 
-    @Autowired
-    public CargoController(ICargoService cargoService) {
-        this.cargoService = cargoService;
-    }
-
     @PostMapping
-    public CargoDto add(@Validated @RequestBody CargoDto cargoDto,
+    public CargoDto add(@Valid @RequestBody CargoDto cargoDto,
                         @RequestParam boolean dens) {
-        System.out.println(cargoDto.getApi());
         return cargoService.add(cargoDto, dens);
     }
 

@@ -50,7 +50,7 @@ public class UllageReportService implements IUllageReportService {
         UllageDtoShort ullageDtoShort;
         UllageReport tankReport = new UllageReport();
         UllageDto dto = ullageService.getByUllageAndTank(ullage, tank);
-        CargoDto cargo = cargoService.findByName(cargoName);
+        CargoDto cargo = cargoService.getByName(cargoName);
         if (table.equals(Tables.Table6A) || table.equals(Tables.Table6B)) {
             ullageDtoShort = ullageService.getUllage(dto, trim, cargo.getApi().getApi(),
                     cargo.getTemperature().getFahrenheit(), table);

@@ -12,7 +12,7 @@ public interface ICargoService {
 
     List<CargoDto> getAll();
 
-    CargoDto findByName(String name);
+    CargoDto getByName(String name);
 
     CargoDto get(Long id);
 
