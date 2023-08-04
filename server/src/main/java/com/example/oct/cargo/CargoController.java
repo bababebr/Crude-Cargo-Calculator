@@ -2,6 +2,7 @@ package com.example.oct.cargo;
 
 import com.example.oct.cargo.dto.CargoDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,7 +22,7 @@ public class CargoController {
     }
 
     @GetMapping("/all")
-    public List<CargoDto> getAll() {
+    public List<CargoDto> getAll(Model model) {
         return cargoService.getAll();
     }
 

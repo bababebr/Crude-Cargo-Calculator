@@ -2,6 +2,7 @@ package com.example.oct.cargo;
 
 import com.example.oct.cargo.dto.CargoDto;
 import com.example.oct.units.api.Api;
+import com.example.oct.units.temperature.Temperature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,16 @@ public class CargoService implements ICargoService {
 
     @Override
     public CargoDto add(CargoDto cargoDto, boolean dens) {
+        Api api = cargoDto.getApi();
+        Temperature temperature = cargoDto.getTemperature();
+
+        if(api.getApi() == null) {
+            cargoDto.setApi(Api.formDens(api.getDensVac()));
+            cargoDto.setTemperature(Temperature.fromCelius(temperature.getCelsius()));
+        } else {
+            cargoDto.setApi(Api.fromApi(api.getApi()));
+            cargoDto.setTemperature(Temperature.fromFahrenheit(temperature.getFahrenheit()));
+        }
         repository.save(CargoMapper.dtoToCargo(cargoDto));
         return cargoDto;
     }

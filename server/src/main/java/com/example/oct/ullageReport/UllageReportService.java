@@ -24,12 +24,12 @@ public class UllageReportService implements IUllageReportService {
     private CargoService cargoService;
 
     @Override
-    public List<UllageReport> createReport(Map<String, Cargo> tanksAndCargosMap, double ullage, double trim, Tables table) {
+    public List<UllageReport> createReport(Map<String, Cargo> tanksAndCargosMap, List<Double> ullage, double trim, Tables table) {
         List<UllageReport> ullageReport = new ArrayList<>();
         for (var entry : tanksAndCargosMap.entrySet()) {
             UllageReport reportEntry = new UllageReport();
 
-            UllageDto dto = ullageService.getByUllageAndTank(ullage, entry.getKey());
+            UllageDto dto = ullageService.getByUllageAndTank(ullage.get, entry.getKey());
             UllageDtoShort ullageDtoShort;
             if (table.equals(Tables.Table6A) || table.equals(Tables.Table6B)) {
                 ullageDtoShort = ullageService.getUllage(dto, trim, entry.getValue().getApi(),
@@ -38,10 +38,12 @@ public class UllageReportService implements IUllageReportService {
                 ullageDtoShort = ullageService.getUllage(dto, trim, entry.getValue().getDensity(),
                         entry.getValue().getTemp_c(), table);
             }
+
             reportEntry.setUllage(ullageDtoShort);
             reportEntry.setTable(table.name());
             reportEntry.setCargo(CargoMapper.cargoToDto(entry.getValue()));
             reportEntry.setTankName(entry.getKey());
+
         }
         return ullageReport;
     }
@@ -49,8 +51,10 @@ public class UllageReportService implements IUllageReportService {
     public UllageReport getOneTank(String tank, String cargoName, double ullage, double trim, Tables table) {
         UllageDtoShort ullageDtoShort;
         UllageReport tankReport = new UllageReport();
+
         UllageDto dto = ullageService.getByUllageAndTank(ullage, tank);
         CargoDto cargo = cargoService.getByName(cargoName);
+
         if (table.equals(Tables.Table6A) || table.equals(Tables.Table6B)) {
             ullageDtoShort = ullageService.getUllage(dto, trim, cargo.getApi().getApi(),
                     cargo.getTemperature().getFahrenheit(), table);
@@ -58,10 +62,12 @@ public class UllageReportService implements IUllageReportService {
             ullageDtoShort = ullageService.getUllage(dto, trim, cargo.getApi().getDensVac(),
                     cargo.getTemperature().getCelsius(), table);
         }
+
         tankReport.setUllage(ullageDtoShort);
         tankReport.setTable(table.name());
         tankReport.setCargo(cargo);
         tankReport.setTankName(tank);
+
         return tankReport;
     }
 }

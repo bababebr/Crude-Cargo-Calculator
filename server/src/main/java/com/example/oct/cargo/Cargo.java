@@ -3,6 +3,7 @@ package com.example.oct.cargo;
 import com.example.oct.enums.CargoType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
