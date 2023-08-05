@@ -15,14 +15,4 @@ public class UllageMapper {
                 ullage.getTovCub4A());
     }
 
-    public static UllageDtoShort dtoFullToShor(UllageDtoFull ullageDtoFull) {
-        return UllageDtoShort.create(ullageDtoFull.getName(),
-                ullageDtoFull.getUllage(),
-                ullageDtoFull.getTovCub(),
-                ullageDtoFull.getVcf(),
-                ullageDtoFull.getGsvBbls(),
-                ullageDtoFull.getGsvCub(),
-                ullageDtoFull.getMetricTons(),
-                ullageDtoFull.getLongTons());
-    }
 }

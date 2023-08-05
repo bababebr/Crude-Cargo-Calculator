@@ -1,7 +1,7 @@
 package com.example.oct.ullageReport;
 
 import com.example.oct.cargo.dto.CargoDto;
-import com.example.oct.ullage.dto.UllageDtoShort;
+import com.example.oct.ullage.dto.UllageDtoFull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 public class UllageReport {
 
     String tankName;
-    UllageDtoShort ullage;
+    UllageDtoFull ullage;
     CargoDto cargo;
     String table;
 

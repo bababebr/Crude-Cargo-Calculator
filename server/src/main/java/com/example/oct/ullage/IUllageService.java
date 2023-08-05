@@ -1,9 +1,10 @@
 package com.example.oct.ullage;
 
 import com.example.oct.ullage.dto.UllageDto;
+import com.example.oct.ullage.dto.UllageRequestDto;
 
 public interface IUllageService {
 
-    UllageDto getByUllageAndTank(double ullage, String name);
+    UllageDto getTankUllage(UllageRequestDto requestDto);
 
 }

@@ -10,7 +10,7 @@
     <span th:text="List of cargoes"></span>
 </p>
 
-<div th:if="${ not#lists.isEmpty(cargos)}">
+<div th:if="${ not#lists.isEmpty(cargo)}">
     <table>
         <thead>
         <tr>
@@ -19,9 +19,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="cargo : ${cargos}">
-            <td th:text="${cargo.name}">&nbsp;</td>
-            <td th:text="${cargo.type}">&nbsp;</td>
+        <tr th:each="cargos : ${cargo}">
+            <td th:text="${cargos.name}">&nbsp;</td>
+            <td th:text="${cargos.type}">&nbsp;</td>
         </tr>
         </tbody>
     </table>

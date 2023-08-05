@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,11 +22,16 @@ public class CargoService implements ICargoService {
     }
 
     @Override
-    public CargoDto add(CargoDto cargoDto, boolean dens) {
+    public CargoDto add(CargoDto cargoDto) {
+
+        if (repository.findByName(cargoDto.getName()).isPresent()) {
+            throw new IllegalStateException(String.format("Cargo with Name=%s already exist", cargoDto.getName()));
+        }
+
         Api api = cargoDto.getApi();
         Temperature temperature = cargoDto.getTemperature();
 
-        if(api.getApi() == null) {
+        if (api.getApi() == null) {
             cargoDto.setApi(Api.formDens(api.getDensVac()));
             cargoDto.setTemperature(Temperature.fromCelius(temperature.getCelsius()));
         } else {
@@ -34,6 +40,25 @@ public class CargoService implements ICargoService {
         }
         repository.save(CargoMapper.dtoToCargo(cargoDto));
         return cargoDto;
+    }
+
+    @Override
+    public CargoDto update(CargoDto cargoDto, Long id) {
+        Optional<Cargo> existedCargo = repository.findById(id);
+
+        if (existedCargo.isEmpty()) {
+            throw new IllegalStateException(String.format("Cargo with Name=%s not exist", cargoDto.getName()));
+        }
+
+        Cargo cargo = existedCargo.get();
+        cargo.setName(cargoDto.getName());
+        cargo.setApi(cargoDto.getApi().getApi());
+        cargo.setDensity(cargoDto.getApi().getDensVac());
+        cargo.setTemp_f(cargoDto.getTemperature().getFahrenheit());
+        cargo.setTemp_c(cargoDto.getTemperature().getCelsius());
+        cargo.setType(cargoDto.getType());
+
+        return CargoMapper.cargoToDto(repository.save(cargo));
     }
 
     @Override
@@ -52,7 +77,5 @@ public class CargoService implements ICargoService {
         return CargoMapper.cargoToDto(repository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("Cargo with ID=" + id + " not found.")));
     }
-
-
 
 }

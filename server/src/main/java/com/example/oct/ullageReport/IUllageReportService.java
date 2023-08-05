@@ -8,6 +8,4 @@ import java.util.Map;
 
 public interface IUllageReportService {
 
-    List<UllageReport> createReport(Map<String, Cargo> tanksAndCargosMap, double ullage, double trim, Tables tables);
-
 }

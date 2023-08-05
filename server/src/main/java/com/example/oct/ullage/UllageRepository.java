@@ -16,4 +16,8 @@ public interface UllageRepository extends JpaRepository<Ullage, Long> {
 
     @Query("SELECT ull FROM Ullage as ull WHERE ull.name = ?1 order by abs(ull.ullage - ?2) asc")
     List<Ullage> getNextUllage(String name, double ullage, Pageable pageable);
+
+    @Query("SELECT max(ull.ullage) FROM Ullage as ull WHERE ull.name =?1")
+    Double maxUllage(String name);
+
 }

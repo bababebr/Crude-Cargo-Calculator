@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface ICargoService {
 
-    CargoDto add(CargoDto cargoDto, boolean dens);
+    CargoDto add(CargoDto cargoDto);
 
     List<CargoDto> getAll();
 
@@ -16,4 +16,5 @@ public interface ICargoService {
 
     CargoDto get(Long id);
 
+    CargoDto update(CargoDto cargoDto, Long id);
 }

@@ -16,14 +16,18 @@ public class CargoController {
     private final ICargoService cargoService;
 
     @PostMapping
-    public CargoDto add(@Valid @RequestBody CargoDto cargoDto,
-                        @RequestParam boolean dens) {
-        return cargoService.add(cargoDto, dens);
+    public CargoDto add(@Valid @RequestBody CargoDto cargoDto) {
+        return cargoService.add(cargoDto);
     }
 
     @GetMapping("/all")
-    public List<CargoDto> getAll(Model model) {
+    public List<CargoDto> getAll() {
         return cargoService.getAll();
+    }
+
+    @PutMapping("/update")
+    public CargoDto update(@Valid @RequestBody CargoDto cargoDto, @RequestHeader("Cargo-Id") Long id) {
+        return cargoService.update(cargoDto, id);
     }
 
     @GetMapping("/{id}")

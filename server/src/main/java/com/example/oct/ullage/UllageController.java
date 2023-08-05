@@ -1,9 +1,11 @@
 package com.example.oct.ullage;
 
-import com.example.oct.enums.Tables;
-import com.example.oct.ullage.dto.UllageDtoShort;
+import com.example.oct.ullage.dto.UllageDto;
+import com.example.oct.ullage.dto.UllageRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/ullage")
@@ -16,14 +18,9 @@ public class UllageController {
         this.service = service;
     }
 
-    @GetMapping("tank/{name}")
-    public UllageDtoShort getWithTrim(@PathVariable String name,
-                                      @RequestParam double ullage,
-                                      @RequestParam(required = false, defaultValue = "0") double trim,
-                                      @RequestParam double api,
-                                      @RequestParam double temp,
-                                      @RequestParam Tables table) {
-        return service.getUllage(service.getByUllageAndTank(ullage, name), trim, api, temp, table);
+    @GetMapping("/tank")
+    public UllageDto get(@Valid @RequestBody UllageRequestDto requestDto) {
+        return service.getTankUllage(requestDto);
     }
 
 
