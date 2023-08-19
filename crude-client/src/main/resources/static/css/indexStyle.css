@@ -1,0 +1,15 @@
+body {
+    background-color: #2f334e;
+}
+
+div {
+display: grid;
+    background-color: red;
+    border-width: medium;
+
+}
+
+button {
+    size: A4;
+    align-content: center;
+}

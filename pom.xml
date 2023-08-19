@@ -9,21 +9,21 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>ru.oct</groupId>
-    <artifactId>OCT</artifactId>
+    <groupId>ru.oil</groupId>
+    <artifactId>CrudeService</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>OCT</name>
-    <description>OCT</description>
+    <name>crude-oil-calculation-service</name>
+    <description>Service for the Ullage reports calculation, API to density and temperatures conversion</description>
 
     <properties>
         <java.version>11</java.version>
     </properties>
 
     <modules>
-        <module>client</module>
-        <module>server</module>
+        <module>crude-client</module>
+        <module></module>
     </modules>
 
 
