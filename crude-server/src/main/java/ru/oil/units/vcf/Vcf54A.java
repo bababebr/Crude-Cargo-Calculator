@@ -32,6 +32,8 @@ public class Vcf54A implements Vcf {
     public Api getApi() {
         return api;
     }
+
+    @Override
     public Temperature getTemp() {
         return temperature;
     }

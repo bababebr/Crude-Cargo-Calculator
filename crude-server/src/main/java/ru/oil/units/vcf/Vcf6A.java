@@ -33,6 +33,7 @@ public class Vcf6A implements Vcf {
         return api;
     }
 
+    @Override
     public Temperature getTemp() {
         return temperature;
     }

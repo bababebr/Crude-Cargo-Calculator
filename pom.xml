@@ -23,7 +23,7 @@
 
     <modules>
         <module>crude-client</module>
-        <module></module>
+        <module>crude-server</module>
     </modules>
 
 

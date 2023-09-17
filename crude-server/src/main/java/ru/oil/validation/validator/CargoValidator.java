@@ -1,12 +1,12 @@
 package ru.oil.validation.validator;
 
 import ru.oil.cargo.dto.CargoDto;
-import ru.oil.validation.annotaion.Cargo;
+import ru.oil.validation.annotaion.CargoValidation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class CargoValidator implements ConstraintValidator<Cargo, CargoDto> {
+public class CargoValidator implements ConstraintValidator<CargoValidation, CargoDto> {
 
     @Override
     public boolean isValid(CargoDto cargoDto, ConstraintValidatorContext constraintValidatorContext) {

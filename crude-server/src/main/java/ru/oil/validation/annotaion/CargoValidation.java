@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = CargoValidator.class)
 @Documented
-public @interface Cargo {
+public @interface CargoValidation {
 
     String message() default "{CargoDto.invalid}";
 
