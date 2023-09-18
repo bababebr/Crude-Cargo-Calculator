@@ -10,6 +10,8 @@ import ru.oil.ullage.UllageService;
 import ru.oil.ullage.dto.UllageDto;
 import ru.oil.ullage.dto.UllageDtoFull;
 import ru.oil.ullage.dto.UllageRequestDto;
+import ru.oil.ullageReport.model.UllageReport;
+import ru.oil.ullageReport.model.UllageReportDto;
 import ru.oil.units.api.Api;
 import ru.oil.units.temperature.Temperature;
 import ru.oil.units.vcf.*;
@@ -31,8 +33,8 @@ public class UllageReportService implements IUllageReportService {
     }
 
 
-    public List<UllageReport> getReport(List<UllageRequestDto> requestDtos, String cargoName) {
-        List<UllageReport> reports = new ArrayList<>();
+    public List<UllageReportDto> getReport(List<UllageRequestDto> requestDtos, String cargoName) {
+        List<UllageReportDto> reports = new ArrayList<>();
         CargoDto cargo = cargoService.getByName(cargoName);
         for (UllageRequestDto requestDto : requestDtos) {
             String tank = requestDto.getTankName();
@@ -45,7 +47,7 @@ public class UllageReportService implements IUllageReportService {
             tankReport.setCargo(cargo);
             tankReport.setTankName(tank);
 
-            reports.add(tankReport);
+            reports.add(UllageReportMapper.ullageReportToDto(tankReport));
 
         }
 

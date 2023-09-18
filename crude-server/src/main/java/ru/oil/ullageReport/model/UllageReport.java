@@ -1,4 +1,4 @@
-package ru.oil.ullageReport;
+package ru.oil.ullageReport.model;
 
 import ru.oil.cargo.dto.CargoDto;
 import ru.oil.ullage.dto.UllageDtoFull;

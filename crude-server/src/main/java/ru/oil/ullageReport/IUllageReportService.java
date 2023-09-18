@@ -1,10 +1,11 @@
 package ru.oil.ullageReport;
 
 import ru.oil.ullage.dto.UllageRequestDto;
+import ru.oil.ullageReport.model.UllageReportDto;
 
 import java.util.List;
 
 public interface IUllageReportService {
 
-    List<UllageReport> getReport(List<UllageRequestDto> requestsDto, String cargoName);
+    List<UllageReportDto> getReport(List<UllageRequestDto> requestsDto, String cargoName);
 }
