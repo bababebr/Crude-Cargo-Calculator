@@ -15,12 +15,7 @@ public class UllageReportController {
     private final UllageReportService service;
 
     @GetMapping("/tank")
-    public UllageReport create(@Valid @RequestBody UllageRequestDto requestDto, @RequestHeader("Cargo-Name") String cargoName) {
+    public List<UllageReport> create(@Valid @RequestBody List<UllageRequestDto> requestDto, @RequestHeader("Cargo-Name") String cargoName) {
         return service.getReport(requestDto, cargoName);
-    }
-
-    @GetMapping()
-    public UllageReport get(@Valid @RequestBody List<UllageRequestDto> requestsDto, @RequestHeader("Cargo-Name") String cargoName) {
-        return service.getReport(requestsDto, cargoName);
     }
 }

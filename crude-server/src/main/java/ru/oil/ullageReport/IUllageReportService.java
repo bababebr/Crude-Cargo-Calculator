@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IUllageReportService {
 
-    UllageReport getReport(List<UllageRequestDto> requestsDto, String cargoName);
+    List<UllageReport> getReport(List<UllageRequestDto> requestsDto, String cargoName);
 }
