@@ -2,6 +2,7 @@ package ru.oil.cargo;
 
 import ru.oil.cargo.dto.CargoDto;
 import ru.oil.units.api.Api;
+import ru.oil.units.api.ApiDto;
 import ru.oil.units.temperature.Temperature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,22 +24,12 @@ public class CargoService implements ICargoService {
 
     @Override
     public CargoDto add(CargoDto cargoDto) {
-
         if (repository.findByName(cargoDto.getName()).isPresent()) {
             throw new IllegalStateException(String.format("Cargo with Name=%s already exist", cargoDto.getName()));
         }
-
-        Api api = cargoDto.getApi();
-        Temperature temperature = cargoDto.getTemperature();
-
-        if (api.getApi() == null) {
-            cargoDto.setApi(Api.formDens(api.getDensVac()));
-            cargoDto.setTemperature(Temperature.fromCelius(temperature.getCelsius()));
-        } else {
-            cargoDto.setApi(Api.fromApi(api.getApi()));
-            cargoDto.setTemperature(Temperature.fromFahrenheit(temperature.getFahrenheit()));
-        }
-        repository.save(CargoMapper.dtoToCargo(cargoDto));
+        Api api = cargoDto.getApi().toApi();
+        Temperature temperature = cargoDto.getTemperature().toTemperature();
+        repository.save(CargoMapper.dtoToCargo(cargoDto, api, temperature));
         return cargoDto;
     }
 

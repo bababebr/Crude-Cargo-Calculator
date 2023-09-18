@@ -21,17 +21,17 @@ CREATE TABLE IF NOT EXISTS Cargo (
     TEMP_F FLOAT NOT NULL
 );
 
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/1P.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/1S.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/2P.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/2S.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/3P.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/3S.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/4P.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/4S.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/5P.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/5S.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/6P.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/6S.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/SLP.csv');
-INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('server/src/main/resources/static/SLS.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/1P.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/1S.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/2P.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/2S.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/3P.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/3S.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/4P.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/4S.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/5P.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/5S.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/6P.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/6S.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/SLP.csv');
+INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/SLS.csv');

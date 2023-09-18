@@ -1,5 +1,8 @@
 package ru.oil.ullageReport;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 import ru.oil.cargo.CargoService;
 import ru.oil.cargo.dto.CargoDto;
 import ru.oil.enums.Tables;
@@ -9,12 +12,8 @@ import ru.oil.ullage.dto.UllageDtoFull;
 import ru.oil.ullage.dto.UllageRequestDto;
 import ru.oil.units.api.Api;
 import ru.oil.units.temperature.Temperature;
-import com.example.oct.units.vcf.*;
 import ru.oil.units.vcf.*;
 import ru.oil.units.wcf.Wcf;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UllageReportService implements IUllageReportService {
@@ -54,8 +53,8 @@ public class UllageReportService implements IUllageReportService {
     public UllageDtoFull getUllage(UllageRequestDto requestDto, @Nullable CargoDto cargoDto) {
 
         Tables tables = requestDto.getTable();
-        Api api = cargoDto.getApi();
-        Temperature temp = cargoDto.getTemperature();
+        Api api = cargoDto.getApi().toApi();
+        Temperature temp = cargoDto.getTemperature().toTemperature();
         double trim = requestDto.getTrim();
         UllageDto ullageDto = ullageService.getTankUllage(requestDto);
 
