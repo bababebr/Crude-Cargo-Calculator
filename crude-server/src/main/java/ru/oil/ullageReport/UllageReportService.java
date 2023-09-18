@@ -15,6 +15,8 @@ import ru.oil.units.temperature.Temperature;
 import ru.oil.units.vcf.*;
 import ru.oil.units.wcf.Wcf;
 
+import java.util.List;
+
 @Service
 public class UllageReportService implements IUllageReportService {
 
@@ -28,7 +30,7 @@ public class UllageReportService implements IUllageReportService {
     }
 
 
-    public UllageReport getOneTank(UllageRequestDto requestDto, String cargoName) {
+    public UllageReport getReport(List<UllageRequestDto> requestDto, String cargoName) {
         CargoDto cargo = cargoService.getByName(cargoName);
 
         String tank = requestDto.getTankName();
