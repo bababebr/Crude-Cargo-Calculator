@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"LSC\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": 61.4,\r\n    \"temp_f\": 103\r\n}",
+							"raw": "{\r\n    \"name\": \"LSC\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": {\r\n        \"api\": 61.4\r\n    },\r\n    \"temperature\": {\r\n        \"celsius\" : 43\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,10 +24,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/cargo",
+							"raw": "http://localhost:9090/cargo",
+							"protocol": "http",
 							"host": [
-								"{{baseUrl}}"
+								"localhost"
 							],
+							"port": "9090",
 							"path": [
 								"cargo"
 							]
@@ -38,11 +40,17 @@
 				{
 					"name": "Cargo Update",
 					"request": {
-						"method": "POST",
-						"header": [],
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cargo-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Dubai CO\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": 30.5,\r\n    \"temp_f\": 90\r\n}",
+							"raw": "{\r\n    \"name\": \"LSC\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": {\r\n        \"api\": 40\r\n    },\r\n    \"temperature\": {\r\n        \"celsius\" : 43\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -50,12 +58,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/cargo&dens=false",
+							"raw": "http://localhost:9090/cargo/update",
+							"protocol": "http",
 							"host": [
-								"{{baseUrl}}"
+								"localhost"
 							],
+							"port": "9090",
 							"path": [
-								"cargo&dens=false"
+								"cargo",
+								"update"
 							]
 						}
 					},
@@ -119,19 +130,6 @@
 								"tank"
 							]
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Ullage",
-			"item": [
-				{
-					"name": "get Ullage 1P",
-					"request": {
-						"method": "GET",
-						"header": []
 					},
 					"response": []
 				}
