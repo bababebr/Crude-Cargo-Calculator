@@ -39,13 +39,15 @@ public class CargoService implements ICargoService {
         if (existedCargo.isEmpty()) {
             throw new IllegalStateException(String.format("Cargo with Name=%s not exist", cargoDto.getName()));
         }
+        Api newApi = cargoDto.getApi().toApi();
+        Temperature newTemperature = cargoDto.getTemperature().toTemperature();
 
         Cargo cargo = existedCargo.get();
         cargo.setName(cargoDto.getName());
-        cargo.setApi(cargoDto.getApi().getApi());
-        cargo.setDensity(cargoDto.getApi().getDensVac());
-        cargo.setTemp_f(cargoDto.getTemperature().getFahrenheit());
-        cargo.setTemp_c(cargoDto.getTemperature().getCelsius());
+        cargo.setApi(newApi.getApi());
+        cargo.setDensity(newApi.getDensVac());
+        cargo.setTemp_f(newTemperature.getFahrenheit());
+        cargo.setTemp_c(newTemperature.getCelsius());
         cargo.setType(cargoDto.getType());
 
         return CargoMapper.cargoToDto(repository.save(cargo));

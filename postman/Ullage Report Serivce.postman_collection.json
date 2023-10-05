@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "735b320f-0c49-4743-88a2-25100378b730",
+		"name": "Ullage Report Serivce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21661542"
+	},
+	"item": [
+		{
+			"name": "Cargo",
+			"item": [
+				{
+					"name": "Cargo Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LSC\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": {\r\n        \"api\": 61.4\r\n    },\r\n    \"temperature\": {\r\n        \"celsius\" : 43\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/cargo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"cargo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargo Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cargo-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LSC\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": {\r\n        \"api\": 40\r\n    },\r\n    \"temperature\": {\r\n        \"celsius\" : 43\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/cargo/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"cargo",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargo get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cargo/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cargo",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ullage Report",
+			"item": [
+				{
+					"name": "Get Report COT 3P, 3S, 4P, 4S, 6P, 6S",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cargo-Name",
+								"value": "LSC",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " [{\r\n    \"tankName\":\"1P\",\r\n    \"ullage\": 15,\r\n    \"trim\": 0,\r\n    \"api\": 33,\r\n    \"temp\": 60,\r\n    \"table\": \"Table6A\"\r\n}, \r\n{\r\n    \"tankName\":\"1S\",\r\n    \"ullage\": 15,\r\n    \"trim\": 0,\r\n    \"api\": 33,\r\n    \"temp\": 60,\r\n    \"table\": \"Table6A\"\r\n} \r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/report/tank",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"report",
+								"tank"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:9090"
+		}
+	]
+}

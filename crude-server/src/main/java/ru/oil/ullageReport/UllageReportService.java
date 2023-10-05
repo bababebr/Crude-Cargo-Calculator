@@ -10,10 +10,15 @@ import ru.oil.ullage.UllageService;
 import ru.oil.ullage.dto.UllageDto;
 import ru.oil.ullage.dto.UllageDtoFull;
 import ru.oil.ullage.dto.UllageRequestDto;
+import ru.oil.ullageReport.model.UllageReport;
+import ru.oil.ullageReport.model.UllageReportDto;
 import ru.oil.units.api.Api;
 import ru.oil.units.temperature.Temperature;
 import ru.oil.units.vcf.*;
 import ru.oil.units.wcf.Wcf;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UllageReportService implements IUllageReportService {
@@ -28,21 +33,25 @@ public class UllageReportService implements IUllageReportService {
     }
 
 
-    public UllageReport getOneTank(UllageRequestDto requestDto, String cargoName) {
+    public List<UllageReportDto> getReport(List<UllageRequestDto> requestDtos, String cargoName) {
+        List<UllageReportDto> reports = new ArrayList<>();
         CargoDto cargo = cargoService.getByName(cargoName);
+        for (UllageRequestDto requestDto : requestDtos) {
+            String tank = requestDto.getTankName();
+            Tables table = requestDto.getTable();
+            UllageDtoFull ullageDto = getUllage(requestDto, cargo);
 
-        String tank = requestDto.getTankName();
-        Tables table = requestDto.getTable();
+            UllageReport tankReport = new UllageReport();
+            tankReport.setUllage(ullageDto);
+            tankReport.setTable(table.name());
+            tankReport.setCargo(cargo);
+            tankReport.setTankName(tank);
 
-        UllageDtoFull ullageDto = getUllage(requestDto, cargo);
+            reports.add(UllageReportMapper.ullageReportToDto(tankReport));
 
-        UllageReport tankReport = new UllageReport();
-        tankReport.setUllage(ullageDto);
-        tankReport.setTable(table.name());
-        tankReport.setCargo(cargo);
-        tankReport.setTankName(tank);
+        }
 
-        return tankReport;
+        return reports;
     }
 
     /**
