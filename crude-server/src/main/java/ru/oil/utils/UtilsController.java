@@ -28,7 +28,7 @@ public class UtilsController {
     }
 
     @GetMapping("/wcf")
-    public WcfDto getWcf(@RequestParam(required = false) Double api) {
+    public WcfDto getWcf(@RequestParam Double api) {
         return wcfService.getWcf(api);
     }
 }
