@@ -1,23 +1,23 @@
 package ru.oil.units.wcf;
 
+import lombok.AllArgsConstructor;
 import ru.oil.units.vcf.Vcf;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(staticName = "create")
+@AllArgsConstructor(staticName = "create")
 public class Wcf {
 
-    private final Vcf vcf;
+    private double api;
 
     public double getT11() {
-        return (0.0375 * ((589.943 / (vcf.getApi().getApi() + 131.5)) - 0.0050789) * 100000 + 0.5) / 100000;
+        return (0.0375 * ((589.943 / (api + 131.5)) - 0.0050789) * 100000 + 0.5) / 100000;
     }
 
     public double getT13() {
-        return (0.042 * ((535.1911 / (vcf.getApi().getApi() + 131.5)) - 0.0046189) * 100000 + 0.5) / 100000;
+        return (0.042 * ((535.1911 / (api + 131.5)) - 0.0046189) * 100000 + 0.5) / 100000;
     }
 
     public double getT52() {
-        double api = vcf.getApi().getApi();
         double t52 = 0.15893;
         if (api <= 15.29) {
             return t52;
