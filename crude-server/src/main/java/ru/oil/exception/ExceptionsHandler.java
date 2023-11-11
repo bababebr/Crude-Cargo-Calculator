@@ -1,10 +1,12 @@
 package ru.oil.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.ServletException;
 import javax.validation.ValidationException;
 import java.util.NoSuchElementException;
 
@@ -21,6 +23,12 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse stateException(final RuntimeException e) {
         return new ErrorResponse("Request Exception: ", e.getMessage());
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse requestParamException(final ServletException e) {
+        return new ErrorResponse("Request Parameter Error.", e.getMessage());
     }
 
 }

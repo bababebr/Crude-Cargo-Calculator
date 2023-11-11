@@ -131,7 +131,7 @@ public class UllageReportService implements IUllageReportService {
             default:
                 throw new IllegalStateException("Table not exist");
         }
-        Wcf wcf = Wcf.create(vcf);
+        Wcf wcf = Wcf.create(api.getApi());
         if (tables.equals(Tables.Table54A) || tables.equals(Tables.Table54B)) {
             result.setGsvCub(result.getGovCub() * vcf.getVcf());
             result.setGsvBbls(result.getGsvCub() / wcf.getT52());
