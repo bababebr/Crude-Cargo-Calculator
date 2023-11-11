@@ -21,6 +21,9 @@ CREATE TABLE IF NOT EXISTS Cargo (
     TEMP_F FLOAT NOT NULL
 );
 
+/*
+ TODO Fix Fill table from CSV using docker
+ */
 INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/1P.csv');
 INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/1S.csv');
 INSERT INTO Calibration_table(ULLAGE, TANK, Cub1F, Cub, Cub1A, Cub2A, Cub3A, Cub4A) SELECT * FROM CSVREAD('crude-server/src/main/resources/static/2P.csv');
