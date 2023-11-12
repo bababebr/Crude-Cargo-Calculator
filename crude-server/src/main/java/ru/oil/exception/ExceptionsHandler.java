@@ -19,7 +19,7 @@ public class ExceptionsHandler {
         return new ErrorResponse("Element Exception: ", e.getMessage());
     }
 
-    @ExceptionHandler({IllegalStateException.class, ValidationException.class})
+    @ExceptionHandler({IllegalStateException.class, ValidationException.class, IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse stateException(final RuntimeException e) {
         return new ErrorResponse("Request Exception: ", e.getMessage());

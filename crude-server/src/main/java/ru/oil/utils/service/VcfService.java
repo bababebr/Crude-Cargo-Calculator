@@ -14,7 +14,7 @@ public class VcfService implements IVcfService {
     @Override
     public VcfDto getVcf(double apiOrDensity, double temperature, Tables table, boolean isApi, boolean isCelsius) {
         Api api = isApi ? Api.fromApi(apiOrDensity) : Api.formDens(apiOrDensity);
-        Temperature temp = isCelsius ? Temperature.fromCelius(temperature) : Temperature.fromFahrenheit(temperature);
+        Temperature temp = isCelsius ? Temperature.fromCelsius(temperature) : Temperature.fromFahrenheit(temperature);
         switch (table) {
             case Table6A:
                 return VcfMapper.vcfToDto(Vcf6A.create(api, temp));

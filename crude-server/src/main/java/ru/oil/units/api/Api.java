@@ -1,16 +1,19 @@
 package ru.oil.units.api;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Api {
 
-    private Double api;
-    private Double specificGravity;
-    private Double densAir;
-    private Double densVac;
+    Double api;
+    Double specificGravity;
+    Double densAir;
+    Double densVac;
 
     public static Api fromApi(double api) {
         Api a = new Api();

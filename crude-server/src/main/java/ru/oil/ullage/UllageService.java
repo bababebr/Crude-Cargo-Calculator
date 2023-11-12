@@ -35,7 +35,6 @@ public class UllageService implements IUllageService {
                     PageRequest.of(0, 1)).get(0);
             Ullage prevUllage = repository.findById(nextUllage.getId() - 1)
                     .orElseThrow(() -> new NoSuchElementException("Ullage you entered is to low"));
-
             UllageDto actualUllageDto = calculateActualUllage(List.of(UllageMapper.ullageToDto(prevUllage),
                     UllageMapper.ullageToDto(nextUllage)), requestDto.getUllage());
             return actualUllageDto;

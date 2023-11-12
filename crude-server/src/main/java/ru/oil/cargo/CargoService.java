@@ -1,11 +1,10 @@
 package ru.oil.cargo;
 
-import ru.oil.cargo.dto.CargoDto;
-import ru.oil.units.api.Api;
-import ru.oil.units.api.ApiDto;
-import ru.oil.units.temperature.Temperature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.oil.cargo.dto.CargoDto;
+import ru.oil.units.api.Api;
+import ru.oil.units.temperature.Temperature;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,6 +29,7 @@ public class CargoService implements ICargoService {
         Api api = cargoDto.getApi().toApi();
         Temperature temperature = cargoDto.getTemperature().toTemperature();
         repository.save(CargoMapper.dtoToCargo(cargoDto, api, temperature));
+        cargoDto = CargoMapper.cargoToDto(repository.findByName(cargoDto.getName()).get());
         return cargoDto;
     }
 

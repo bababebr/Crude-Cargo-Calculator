@@ -1,14 +1,17 @@
 package ru.oil.units.temperature;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Temperature {
 
-    private Double celsius;
-    private Double fahrenheit;
+    Double celsius;
+    Double fahrenheit;
 
-    public static Temperature fromCelius(double celsius) {
+    public static Temperature fromCelsius(double celsius) {
         Temperature t = new Temperature();
         t.setCelsius(celsius);
         t.setFahrenheit(t.toF(celsius));
@@ -29,5 +32,4 @@ public class Temperature {
     private double toC(double fahrenheit) {
         return (fahrenheit - 32) * 5d / 9d;
     }
-
 }
