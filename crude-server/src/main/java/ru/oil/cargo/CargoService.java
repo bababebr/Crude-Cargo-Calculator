@@ -3,6 +3,7 @@ package ru.oil.cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.oil.cargo.dto.CargoDto;
+import ru.oil.enums.CargoType;
 import ru.oil.units.api.Api;
 import ru.oil.units.temperature.Temperature;
 
@@ -54,8 +55,12 @@ public class CargoService implements ICargoService {
     }
 
     @Override
-    public List<CargoDto> getAll() {
-        return repository.findAll().stream().map(CargoMapper::cargoToDto).collect(Collectors.toList());
+    public List<CargoDto> getAll(CargoType type) {
+        if (type == null) {
+            return repository.findAll().stream().map(CargoMapper::cargoToDto).collect(Collectors.toList());
+        } else {
+            return repository.findAllByType(type).stream().map(CargoMapper::cargoToDto).collect(Collectors.toList());
+        }
     }
 
     @Override

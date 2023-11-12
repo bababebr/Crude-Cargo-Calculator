@@ -2,6 +2,7 @@ package ru.oil.cargo;
 
 import ru.oil.cargo.dto.CargoDto;
 import org.springframework.stereotype.Service;
+import ru.oil.enums.CargoType;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ICargoService {
 
     CargoDto add(CargoDto cargoDto);
 
-    List<CargoDto> getAll();
+    List<CargoDto> getAll(CargoType type);
 
     CargoDto getByName(String name);
 

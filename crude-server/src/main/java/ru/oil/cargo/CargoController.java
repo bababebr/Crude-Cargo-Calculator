@@ -3,6 +3,7 @@ package ru.oil.cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.oil.cargo.dto.CargoDto;
+import ru.oil.enums.CargoType;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,8 +26,8 @@ public class CargoController {
     }
 
     @GetMapping("/all")
-    public List<CargoDto> getAll() {
-        return cargoService.getAll();
+    public List<CargoDto> getAll(@RequestParam(required = false) CargoType type) {
+        return cargoService.getAll(type);
     }
 
     @PutMapping("/update")
