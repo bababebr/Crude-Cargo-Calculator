@@ -10,7 +10,35 @@
 			"name": "Cargo",
 			"item": [
 				{
-					"name": "Cargo Add",
+					"name": "Cargo add crude with Dens and TempC",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LSC\",\r\n    \"type\": \"CRUDE\",\r\n    \"api\": {\r\n        \"api\": 61.4\r\n    },\r\n    \"temperature\": {\r\n        \"celsius\" : 43\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/cargo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"cargo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargo add fuel with Dens and TempC Copy",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -89,6 +117,54 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Cargo get with type CRUDE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cargo/all?type=CRUDE",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cargo",
+								"all"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "CRUDE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargo get with type FUEL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cargo/all?type=FUEL",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cargo",
+								"all"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "FUEL"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -96,7 +172,7 @@
 			"name": "Ullage Report",
 			"item": [
 				{
-					"name": "Get Report COT 3P, 3S, 4P, 4S, 6P, 6S",
+					"name": "Get Report COT 1P, 5P",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -134,6 +210,209 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Utils",
+			"item": [
+				{
+					"name": "Vcf",
+					"item": [
+						{
+							"name": "Get Vcf 6A; API - 33.5, Temp - 110F",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Is-Api",
+										"value": "true",
+										"type": "text"
+									},
+									{
+										"key": "Is-Celsius",
+										"value": "false",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/utils/vcf?table=Table6A&api=33.5&temp=110",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"utils",
+										"vcf"
+									],
+									"query": [
+										{
+											"key": "table",
+											"value": "Table6A"
+										},
+										{
+											"key": "api",
+											"value": "33.5"
+										},
+										{
+											"key": "temp",
+											"value": "110"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Vcf 6A; Density - 0.8571, Temp - 43.3 C",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Is-Api",
+										"value": "false",
+										"type": "text"
+									},
+									{
+										"key": "Is-Celsius",
+										"value": "true",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/utils/vcf?table=Table6A&api=0.8571&temp=43.3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"utils",
+										"vcf"
+									],
+									"query": [
+										{
+											"key": "table",
+											"value": "Table6A"
+										},
+										{
+											"key": "api",
+											"value": "0.8571"
+										},
+										{
+											"key": "temp",
+											"value": "43.3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Vcf 54A; API - 33.5, Temp - 110F",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Is-Api",
+										"value": "true",
+										"type": "text"
+									},
+									{
+										"key": "Is-Celsius",
+										"value": "false",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/utils/vcf?table=Table54A&api=33.5&temp=110",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"utils",
+										"vcf"
+									],
+									"query": [
+										{
+											"key": "table",
+											"value": "Table54A"
+										},
+										{
+											"key": "api",
+											"value": "33.5"
+										},
+										{
+											"key": "temp",
+											"value": "110"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Vcf 54A; Dens - 0.8571, Temp - 43.3 C",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Is-Api",
+										"value": "false",
+										"type": "text"
+									},
+									{
+										"key": "Is-Celsius",
+										"value": "true",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/utils/vcf?table=Table54A&api=0.8571&temp=43.3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"utils",
+										"vcf"
+									],
+									"query": [
+										{
+											"key": "table",
+											"value": "Table54A"
+										},
+										{
+											"key": "api",
+											"value": "0.8571"
+										},
+										{
+											"key": "temp",
+											"value": "43.3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Wcf",
+					"item": [
+						{
+							"name": "Get Wcf for API=33.5",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
@@ -159,7 +438,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:9090"
+			"value": "http://localhost:8080"
 		}
 	]
 }
