@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.oil.cargo.dto.CargoDto;
 import ru.oil.enums.CargoType;
-import ru.oil.units.api.Api;
-import ru.oil.units.temperature.Temperature;
+import ru.oil.model.Api;
+import ru.oil.model.Temperature;
 
 import java.util.List;
 import java.util.NoSuchElementException;

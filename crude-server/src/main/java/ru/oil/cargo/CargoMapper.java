@@ -1,10 +1,10 @@
 package ru.oil.cargo;
 
 import ru.oil.cargo.dto.CargoDto;
-import ru.oil.units.api.Api;
-import ru.oil.units.api.ApiDto;
-import ru.oil.units.temperature.Temperature;
-import ru.oil.units.temperature.TemperatureDto;
+import ru.oil.model.Api;
+import ru.oil.model.dto.ApiDto;
+import ru.oil.model.Temperature;
+import ru.oil.model.dto.TemperatureDto;
 
 public class CargoMapper {
 

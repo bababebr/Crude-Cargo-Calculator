@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import ru.oil.enums.CargoType;
-import ru.oil.units.api.ApiDto;
-import ru.oil.units.temperature.TemperatureDto;
+import ru.oil.model.dto.ApiDto;
+import ru.oil.model.dto.TemperatureDto;
 
 import javax.validation.constraints.NotNull;
 @Getter
