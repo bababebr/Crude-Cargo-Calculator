@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("api/report")
 @RequiredArgsConstructor
 public class UllageReportController {
 

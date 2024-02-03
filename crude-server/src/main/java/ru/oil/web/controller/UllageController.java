@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/ullage")
+@RequestMapping("api/ullage")
 public class UllageController {
 
     private final UllageService service;

@@ -9,7 +9,7 @@ import ru.oil.service.VcfService;
 import ru.oil.service.WcfService;
 
 @RestController
-@RequestMapping("/utils")
+@RequestMapping("api/utils")
 public class UtilsController {
 
     private final VcfService vcfService;
