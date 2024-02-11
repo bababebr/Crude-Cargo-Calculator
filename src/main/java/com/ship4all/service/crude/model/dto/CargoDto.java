@@ -1,4 +1,4 @@
-package com.ship4all.service.crude.cargo.dto;
+package com.ship4all.service.crude.model.dto;
 
 import com.ship4all.service.crude.enums.CargoType;
 import com.ship4all.service.crude.model.dto.ApiDto;

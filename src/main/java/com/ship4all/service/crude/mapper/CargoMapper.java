@@ -1,6 +1,7 @@
-package com.ship4all.service.crude.cargo;
+package com.ship4all.service.crude.mapper;
 
-import com.ship4all.service.crude.cargo.dto.CargoDto;
+import com.ship4all.service.crude.model.Cargo;
+import com.ship4all.service.crude.model.dto.CargoDto;
 import com.ship4all.service.crude.model.Api;
 import com.ship4all.service.crude.model.dto.ApiDto;
 import com.ship4all.service.crude.model.Temperature;

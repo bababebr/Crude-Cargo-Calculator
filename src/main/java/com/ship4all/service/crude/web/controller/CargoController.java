@@ -1,15 +1,19 @@
-package com.ship4all.service.crude.cargo;
+package com.ship4all.service.crude.web.controller;
 
-import com.ship4all.service.crude.cargo.dto.CargoDto;
+import com.ship4all.service.crude.model.dto.CargoDto;
+import com.ship4all.service.crude.service.interfaces.ICargoService;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.ship4all.service.crude.enums.CargoType;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/cargo")
+@RequestMapping("/api/cargo")
 public class CargoController {
 
     private final ICargoService cargoService;
@@ -19,6 +23,10 @@ public class CargoController {
         this.cargoService = cargoService;
     }
 
+    @PostMapping(value = "/{vesselId}/bind", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Long bindCargoTanks(@RequestParam("file") MultipartFile file, @PathVariable UUID vesselId) {
+        return cargoService.bingCargoTanks(file, vesselId);
+    }
 
     @PostMapping
     public CargoDto add(@Valid @RequestBody CargoDto cargoDto) {

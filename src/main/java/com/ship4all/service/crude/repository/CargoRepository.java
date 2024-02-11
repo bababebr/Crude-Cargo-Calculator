@@ -1,5 +1,6 @@
-package com.ship4all.service.crude.cargo;
+package com.ship4all.service.crude.repository;
 
+import com.ship4all.service.crude.model.Cargo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.ship4all.service.crude.enums.CargoType;

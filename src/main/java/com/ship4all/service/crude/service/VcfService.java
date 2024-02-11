@@ -2,7 +2,7 @@ package com.ship4all.service.crude.service;
 
 import org.springframework.stereotype.Service;
 import com.ship4all.service.crude.enums.Tables;
-import com.ship4all.service.crude.exception.UtilsException;
+import com.ship4all.service.crude.exception.handler.UtilsException;
 import com.ship4all.service.crude.model.Vcf54A;
 import com.ship4all.service.crude.model.Vcf54B;
 import com.ship4all.service.crude.model.Vcf6A;

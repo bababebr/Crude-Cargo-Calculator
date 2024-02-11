@@ -1,5 +1,6 @@
-package com.ship4all.service.crude.exception;
+package com.ship4all.service.crude.exception.handler;
 
+import com.ship4all.service.crude.exception.CalibrationTableAlreadyBindToVesselException;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ValidationException;
 import java.util.NoSuchElementException;
@@ -18,7 +19,7 @@ public class ExceptionsHandler {
         return new ErrorResponse("Element Exception: ", e.getMessage());
     }
 
-    @ExceptionHandler({IllegalStateException.class, ValidationException.class, IllegalArgumentException.class})
+    @ExceptionHandler({IllegalStateException.class, ValidationException.class, IllegalArgumentException.class, CalibrationTableAlreadyBindToVesselException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse stateException(final RuntimeException e) {
         return new ErrorResponse("Request Exception: ", e.getMessage());

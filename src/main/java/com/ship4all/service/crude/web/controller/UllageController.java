@@ -23,6 +23,4 @@ public class UllageController {
     public UllageDto get(@Valid @RequestBody UllageRequestDto requestDto) {
         return service.getTankUllage(requestDto);
     }
-
-
 }

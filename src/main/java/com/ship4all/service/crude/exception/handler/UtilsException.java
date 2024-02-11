@@ -1,4 +1,4 @@
-package com.ship4all.service.crude.exception;
+package com.ship4all.service.crude.exception.handler;
 
 public class UtilsException extends RuntimeException {
 
